@@ -7,7 +7,7 @@ class EmisorCredentials {
             return 'sss';
         } else {
             # SUNAT
-            return 'hamedulan';
+            return '20100392403De';
         }
     }
     public function getUsuarioSol($processType = 1) {
@@ -16,7 +16,7 @@ class EmisorCredentials {
             return 'sss';
         } else {
             # SUNAT
-            return 'RTICATON';
+            return '20100392403';
         }
     }
     public function getPassFirma($processType = 1) {
@@ -25,7 +25,7 @@ class EmisorCredentials {
             return 'sss';
         } else {
             # SUNAT
-            return 'niomads2021';
+            return '20100392403';
         }
     }
     public function getRutaWS($processType = 1) {
@@ -38,7 +38,7 @@ class EmisorCredentials {
             // # THE FACTORY HKA
             // return 'https://demoose.thefactoryhka.com.pe/ol-ti-itcpfegem/billService';
             # SUNAT
-            return 'https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService';
+            return 'http://egestor.dev.efacturacion.pe/ws_tci/service.asmx';
         }
     }
     public function getRutaWSRG($processType = 1) {
