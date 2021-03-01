@@ -1,3 +1,1 @@
-Facturación electrónica - TumiSoft
-<br>
-https://consulta-fe.tumi-soft.com
+Api facturación electrónica - Factura prepago

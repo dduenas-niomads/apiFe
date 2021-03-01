@@ -3,41 +3,29 @@
 class EmisorCredentials {
     public function getClaveSol($processType = 1) {
         if ((int)$processType === 1) {
-            // # THE FACTORY HKA
-            // return 'Y/!-a$?-QKYc';
             # SUNAT
-            return 'tumipos2020';
+            return 'sss';
         } else {
-            // # THE FACTORY HKA
-            // return '20601446686';
             # SUNAT
-            return 'tumipos2020';
+            return 'sss';
         }
     }
     public function getUsuarioSol($processType = 1) {
         if ((int)$processType === 1) {
-            // # THE FACTORY HKA
-            // return '20601446686_INTOSE';
             # SUNAT
-            return '20601446686TUMIPOS1';
+            return 'sss';
         } else {
-            // # THE FACTORY HKA
-            // return '20601446686';
             # SUNAT
-            return '20601446686TUMIPOS1';
+            return 'sss';
         }
     }
     public function getPassFirma($processType = 1) {
         if ((int)$processType === 1) {
-            // # THE FACTORY HKA
-            // return 'Tumifactura2019';
             # SUNAT
-            return 'Tumifactura2019';
+            return 'sss';
         } else {
-            // # THE FACTORY HKA
-            // return 'Tumifactura2019';
             # SUNAT
-            return 'Tumifactura2019';
+            return 'sss';
         }
     }
     public function getRutaWS($processType = 1) {
