@@ -7,7 +7,7 @@ class EmisorCredentials {
             return 'sss';
         } else {
             # SUNAT
-            return 'sss';
+            return 'hamedulan';
         }
     }
     public function getUsuarioSol($processType = 1) {
@@ -16,7 +16,7 @@ class EmisorCredentials {
             return 'sss';
         } else {
             # SUNAT
-            return 'sss';
+            return 'RTICATON';
         }
     }
     public function getPassFirma($processType = 1) {
@@ -25,7 +25,7 @@ class EmisorCredentials {
             return 'sss';
         } else {
             # SUNAT
-            return 'sss';
+            return 'niomads2021';
         }
     }
     public function getRutaWS($processType = 1) {

@@ -27,7 +27,7 @@ class Procesarcomprobante {
 			mkdir($estructura_prod, 0777, true);
 			chmod($estructura_prod,0777);
 			// copiar certificado pfx
-			$fichero = "pse.pfx";
+			$fichero = "beta.pfx";
 			$nuevo_fichero_beta = "../archivos_xml_sunat/certificados/beta/" . $rutas["ruc"] . ".pfx";
 			$nuevo_fichero_prod = "../archivos_xml_sunat/certificados/produccion/" . $rutas["ruc"] . ".pfx";
 			copy($fichero, $nuevo_fichero_beta);

@@ -33,7 +33,7 @@
             echo "Carpeta prod copiada ... " . $data["ruc"] . "\n";
         }
         // copiar certificado pfx
-        $fichero = "pse.pfx";
+        $fichero = "beta.pfx";
         $nuevo_fichero_beta = "../archivos_xml_sunat/certificados/beta/" . $data["ruc"] . ".pfx";
         $nuevo_fichero_prod = "../archivos_xml_sunat/certificados/produccion/" . $data["ruc"] . ".pfx";
         if (!copy($fichero, $nuevo_fichero_beta)) {
