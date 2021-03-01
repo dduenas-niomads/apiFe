@@ -15,7 +15,17 @@
 
 	// Decodificamos y lo guardamos en un array
     $data = json_decode($bodyRequest, true);
-    
+    // fichero existe
+    if (!is_dir("../archivos_xml_sunat")) {
+        mkdir("../archivos_xml_sunat", 0777, true);
+        mkdir("../archivos_xml_sunat/cpe_xml", 0777, true);
+        mkdir("../archivos_xml_sunat/cpe_xml/beta", 0777, true);
+        mkdir("../archivos_xml_sunat/cpe_xml/produccion", 0777, true);
+        mkdir("../archivos_xml_sunat/certificados", 0777, true);
+        mkdir("../archivos_xml_sunat/certificados/beta", 0777, true);
+        mkdir("../archivos_xml_sunat/certificados/produccion", 0777, true);
+    }
+    // copiar certificados
     if (isset($data["ruc"])) {
         // crear carpetas
         $estructura_beta = "../archivos_xml_sunat/cpe_xml/beta/" . $data["ruc"];
