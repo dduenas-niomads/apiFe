@@ -38,7 +38,7 @@ class EmisorCredentials {
             // # THE FACTORY HKA
             // return 'https://demoose.thefactoryhka.com.pe/ol-ti-itcpfegem/billService';
             # SUNAT
-            return 'http://egestor.dev.efacturacion.pe/wcf_tci/service.svc';
+            return 'http://egestor.dev.efacturacion.pe/ws_tci/service.asmx';
         }
     }
     public function getRutaWSRG($processType = 1) {
