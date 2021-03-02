@@ -8,7 +8,6 @@ class Signature {
         //flg_firma:
         //          01, 03, 07, 08: Firmar en el nodo uno.
         //          00: Firmar en el Nodo Cero (para comprobantes de Percepción o Retención)
-        
         $doc = new DOMDocument();
 
         $doc->formatOutput = FALSE;
@@ -33,7 +32,7 @@ class Signature {
         $objDSig->sign($objKey, $doc->documentElement->getElementsByTagName("ExtensionContent")->item($flg_firma));
 
         $atributo = $doc->getElementsByTagName('Signature')->item(0);
-        $atributo->setAttribute('Id', 'SignatureSP');
+        // $atributo->setAttribute('Id', 'SignatureSP');
         
         //===================rescatamos Codigo(HASH_CPE)==================
         $hash_cpe = $doc->getElementsByTagName('DigestValue')->item(0)->nodeValue;

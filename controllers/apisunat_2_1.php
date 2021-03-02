@@ -336,7 +336,156 @@ class Apisunat {
                 }
 
         $xmlCPE = $xmlCPE . '</Invoice>';
-        $doc->loadXML($xmlCPE);
+        $xmlCPE2 = '<?xml version="1.0" encoding="UTF-8"?>
+        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+           <s:Body>
+              <Registrar xmlns="http://tempuri.org/">
+                 <oGeneral xmlns:a="http://schemas.datacontract.org/2004/07/Libreria.XML.Facturacion" 
+                    xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                    <a:IdSeguimiento>0</a:IdSeguimiento>
+                    <a:oENComprobante>
+                       <a:CantidadRegistros>0</a:CantidadRegistros>
+                       <a:ComprobanteDetalle>
+                          <a:ENComprobanteDetalle>
+                             <a:BaseComision>0</a:BaseComision>
+                             <a:Bulto>0</a:Bulto>
+                             <a:Cantidad>4</a:Cantidad>
+                             <a:Codigo>01</a:Codigo>
+                             <a:CodigoTipoPrecio>01</a:CodigoTipoPrecio>
+                             <a:Comision>0</a:Comision>
+                             <a:ComprobanteDetalleImpuestos>
+                                <a:ENComprobanteDetalleImpuestos>
+                                   <a:AfectacionIGV>10</a:AfectacionIGV>
+                                   <a:CodigoTributo>1000</a:CodigoTributo>
+                                   <a:CodigoUN>VAT</a:CodigoUN>
+                                   <a:DesTributo>IGV</a:DesTributo>
+                                   <a:IdComprobanteDetalle>0</a:IdComprobanteDetalle>
+                                   <a:IdComprobanteDetalleImpuestos>0</a:IdComprobanteDetalleImpuestos>
+                                   <a:ImpGratuito>0</a:ImpGratuito>
+                                   <a:ImporteExplicito>3132.00</a:ImporteExplicito>
+                                   <a:ImporteTributo>3132.00</a:ImporteTributo>
+                                   <a:ImpuestoPorcentual>0</a:ImpuestoPorcentual>
+                                </a:ENComprobanteDetalleImpuestos>
+                             </a:ComprobanteDetalleImpuestos>
+                             <a:Costo>0</a:Costo>
+                             <a:Descripcion>Por servicios de consultoría</a:Descripcion>
+                             <a:DescuentoIncIgv>0</a:DescuentoIncIgv>
+                             <a:Determinante>1</a:Determinante>
+                             <a:Fecha>0001-01-01T00:00:00</a:Fecha>
+                             <a:FechaCaducidad>0001-01-01T00:00:00</a:FechaCaducidad>
+                             <a:IdComprobante>0</a:IdComprobante>
+                             <a:IdComprobanteDetalle>0</a:IdComprobanteDetalle>
+                             <a:ImporteBrutoItem>0</a:ImporteBrutoItem>
+                             <a:Item>1</a:Item>
+                             <a:Marca>SUSUKI</a:Marca>
+                             <a:Modelo>SUSUKI SDX</a:Modelo>
+                             <a:Nota>Nota en el detalle</a:Nota>
+                             <a:PesoNeto>0</a:PesoNeto>
+                             <a:PorcentajeDescuento>0</a:PorcentajeDescuento>
+                             <a:PrecioVentaItem>0</a:PrecioVentaItem>
+                             <a:Total>17400</a:Total>
+                             <a:UnidadComercial>ZZ</a:UnidadComercial>
+                             <a:ValorVentaUnitario>4350</a:ValorVentaUnitario>
+                             <a:ValorVentaUnitarioIncIgv>5133.00</a:ValorVentaUnitarioIncIgv>
+                          </a:ENComprobanteDetalle>
+                       </a:ComprobanteDetalle>
+                       <a:ComprobanteImpuestos>
+                          <a:ENComprobanteImpuestos>
+                             <a:CodigoTributo>1000</a:CodigoTributo>
+                             <a:CodigoUN>VAT</a:CodigoUN>
+                             <a:DesTributo>IGV</a:DesTributo>
+                             <a:IdComprobante>0</a:IdComprobante>
+                             <a:IdComprobanteImpuestos>0</a:IdComprobanteImpuestos>
+                             <a:ImporteExplicito>3132.00</a:ImporteExplicito>
+                             <a:ImporteTributo>3132.00</a:ImporteTributo>
+                             <a:Porcentaje>0</a:Porcentaje>
+                          </a:ENComprobanteImpuestos>
+                       </a:ComprobanteImpuestos>
+                       <a:ComprobanteMontosAdicionalesObligatorios>
+                          <a:ENComprobanteMontosAdicionalesObligatorios>
+                             <a:Codigo>1001</a:Codigo>
+                             <a:IdComprobante>0</a:IdComprobante>
+                             <a:IdComprobanteMontosAdicionales>0</a:IdComprobanteMontosAdicionales>
+                             <a:Monto>17400</a:Monto>
+                          </a:ENComprobanteMontosAdicionalesObligatorios>
+                          <a:ENComprobanteMontosAdicionalesObligatorios>
+                             <a:Codigo>1002</a:Codigo>
+                             <a:IdComprobante>0</a:IdComprobante>
+                             <a:IdComprobanteMontosAdicionales>0</a:IdComprobanteMontosAdicionales>
+                             <a:Monto>0</a:Monto>
+                          </a:ENComprobanteMontosAdicionalesObligatorios>
+                          <a:ENComprobanteMontosAdicionalesObligatorios>
+                             <a:Codigo>1003</a:Codigo>
+                             <a:IdComprobante>0</a:IdComprobante>
+                             <a:IdComprobanteMontosAdicionales>0</a:IdComprobanteMontosAdicionales>
+                             <a:Monto>0</a:Monto>
+                          </a:ENComprobanteMontosAdicionalesObligatorios>
+                       </a:ComprobanteMontosAdicionalesObligatorios>
+                       <a:CorreoElectronico>lramirez@tci.net.pe</a:CorreoElectronico>
+                       <a:DescuentoGlobal>0</a:DescuentoGlobal>
+                       <a:Fecha>0001-01-01T00:00:00</a:Fecha>
+                       <a:FechaEmision>2016-10-05T09:32:46.011-05:00</a:FechaEmision>
+                       <a:FechaEmisionDesde>0001-01-01T00:00:00</a:FechaEmisionDesde>
+                       <a:FechaEmisionHasta>0001-01-01T00:00:00</a:FechaEmisionHasta>
+                       <a:FechaObtencion>0001-01-01T00:00:00</a:FechaObtencion>
+                       <a:FiltroFechas>false</a:FiltroFechas>
+                       <a:Glosa>Pruebas de Envio</a:Glosa>
+                       <a:IdComp>0</a:IdComp>
+                       <a:IdComprobante>0</a:IdComprobante>
+                       <a:IdComprobanteCabecera>0</a:IdComprobanteCabecera>
+                       <a:IdCorreoRecepcion>0</a:IdCorreoRecepcion>
+                       <a:IdEmpresa>0</a:IdEmpresa>
+                       <a:IdPuntoVenta>0</a:IdPuntoVenta>
+                       <a:IdSeguimiento>0</a:IdSeguimiento>
+                       <a:IdTipoOrigen>0</a:IdTipoOrigen>
+                       <a:IdTransaccion>0</a:IdTransaccion>
+                       <a:IdUsuario>0</a:IdUsuario>
+                       <a:ImporteTotal>0</a:ImporteTotal>
+                       <a:Moneda>1</a:Moneda>
+                       <a:MontoExonerado>0</a:MontoExonerado>
+                       <a:MontoGratuito>0</a:MontoGratuito>
+                       <a:MontoIGV>0</a:MontoIGV>
+                       <a:MontoISC>0</a:MontoISC>
+                       <a:MontoInafecto>0</a:MontoInafecto>
+                       <a:Numero>69</a:Numero>
+                       <a:NumeroPagina>0</a:NumeroPagina>
+                       <a:OtroConceptoPago>0</a:OtroConceptoPago>
+                       <a:RazonSocial>panizo</a:RazonSocial>
+                       <a:Ruc>20111111111</a:Ruc>
+                       <a:Serie>FX13</a:Serie>
+                       <a:TipoComprobante>01</a:TipoComprobante>
+                       <a:TipoDocumentoIdentidad>6</a:TipoDocumentoIdentidad>
+                       <a:TotalCargo>0</a:TotalCargo>
+                       <a:TotalImporteIncImpuesto>0</a:TotalImporteIncImpuesto>
+                       <a:TotalPrepago>0</a:TotalPrepago>
+                       <a:flagAdjunto>0</a:flagAdjunto>
+                    </a:oENComprobante>
+                    <a:oENEmpresa>
+                       <a:Calle>av nicolas moreyra</a:Calle>
+                       <a:CodDistrito>150140</a:CodDistrito>
+                       <a:CodPais>1</a:CodPais>
+                       <a:CodigoTipoDocumento>6</a:CodigoTipoDocumento>
+                       <a:Correo>correo@tci.net.pe</a:Correo>
+                       <a:Departamento>Lima</a:Departamento>
+                       <a:Distrito>Ventanilla</a:Distrito>
+                       <a:Fax>cFAx 158976546464</a:Fax>
+                       <a:NombreComercial>TCI</a:NombreComercial>
+                       <a:Provincia>Limaa</a:Provincia>
+                       <a:RazonSocial>TCI</a:RazonSocial>
+                       <a:Ruc>20100392403</a:Ruc>
+                       <a:Telefono>577-1111 Fax Nro 099</a:Telefono>
+                       <a:Urbanizacion>Corpac</a:Urbanizacion>
+                       <a:Web>http://www.tci.net.pe/</a:Web>
+                    </a:oENEmpresa>
+                 </oGeneral>
+                 <oTipoComprobante>Factura</oTipoComprobante>
+                 <TipoCodigo>1</TipoCodigo>
+                 <IdComprobanteCliente>0</IdComprobanteCliente>
+                 <Otorgar>1</Otorgar>
+              </Registrar>
+           </s:Body>
+        </s:Envelope>';
+        $doc->loadXML($xmlCPE2);
         $doc->save($ruta . '.xml');
         $resp['respuesta'] = 'ok';
         $resp['url_xml'] = $ruta . '.xml';
@@ -825,13 +974,13 @@ class Apisunat {
             "Accept: text/xml",
             "Cache-Control: no-cache",
             "Pragma: no-cache",
-            "SOAPAction: urn:sendBill",
+            "SOAPAction: urn: http://tempuri.org/IService/Registrar",
             "Content-length: " . strlen($xml_post_string),
         );
 
         $url = $soapUrl;
 
-        // IMPRIMIR REQUEST
+        # IMPRIMIR REQUEST
         // echo $xml_post_string;
         // echo '<br>';
         // echo $soapUrl;
@@ -852,7 +1001,7 @@ class Apisunat {
             $response = curl_exec($ch);
             $httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
             curl_close($ch);
-            
+
             if ($httpcode == 200) {
                 $doc = new DOMDocument();
                 $doc->loadXML($response);

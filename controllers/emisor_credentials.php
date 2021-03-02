@@ -4,7 +4,7 @@ class EmisorCredentials {
     public function getClaveSol($processType = 1) {
         if ((int)$processType === 1) {
             # SUNAT
-            return 'sss';
+            return '20100392403De';
         } else {
             # SUNAT
             return '20100392403De';
@@ -13,7 +13,7 @@ class EmisorCredentials {
     public function getUsuarioSol($processType = 1) {
         if ((int)$processType === 1) {
             # SUNAT
-            return 'sss';
+            return '20100392403';
         } else {
             # SUNAT
             return '20100392403';
@@ -22,7 +22,7 @@ class EmisorCredentials {
     public function getPassFirma($processType = 1) {
         if ((int)$processType === 1) {
             # SUNAT
-            return 'sss';
+            return '20100392403';
         } else {
             # SUNAT
             return '20100392403';
@@ -33,12 +33,13 @@ class EmisorCredentials {
             // # THE FACTORY HKA
             // return 'https://ose.thefactoryhka.com.pe/ol-ti-itcpfegem/billService';
             # SUNAT
-            return 'https://e-factura.sunat.gob.pe/ol-ti-itcpfegem/billService';
+            return 'https://e-beta.sunat.gob.pe/ol-ti-itcpfegem-beta/billService';
         } else {
-            // # THE FACTORY HKA
-            // return 'https://demoose.thefactoryhka.com.pe/ol-ti-itcpfegem/billService';
-            # SUNAT
-            return 'http://egestor.dev.efacturacion.pe/ws_tci/service.asmx';
+            # WEB SERVICE
+            // return 'http://egestor.dev.efacturacion.pe/ws_tci/service.asmx?wsdl';
+            # WCF
+            // return 'https://egestor.dev.efacturacion.pe/ws_tci/service.svc?wsdl';
+            return 'http://egestor.dev.efacturacion.pe/wcf_tci/service.svc?wsdl';
         }
     }
     public function getRutaWSRG($processType = 1) {

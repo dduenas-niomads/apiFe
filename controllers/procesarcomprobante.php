@@ -44,16 +44,15 @@ class Procesarcomprobante {
 		$flg_firma = "0";
 		
 		$resp_firma = $signature->signature_xml($flg_firma, $rutas['ruta_xml'], $rutas['ruta_firma'], $rutas['pass_firma'], $idDocumento, $appId);
-
 		if($resp_firma['respuesta'] == 'error') {
 			return $resp_firma;
 		}
 
 		$resp_envio = $apisunat->enviar_documento($data_comprobante['EMISOR_RUC'], $data_comprobante['EMISOR_USUARIO_SOL'], $data_comprobante['EMISOR_PASS_SOL'], $rutas['ruta_xml'], $rutas['ruta_cdr'], $rutas['nombre_archivo'], $rutas['ruta_ws']);
+		
 		if($resp_envio['respuesta'] == 'error') {
 			return $resp_envio;
-		}
-		
+		}		
 		
 		$resp['respuesta'] = 'ok';
 		$resp['hash_cpe'] = $resp_firma['hash_cpe'];
