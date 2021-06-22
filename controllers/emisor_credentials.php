@@ -4,10 +4,10 @@ class EmisorCredentials {
     public function getClaveSol($processType = 1) {
         if ((int)$processType === 1) {
             # SUNAT
-            return '20100392403De';
+            return '20100392403Qa';
         } else {
             # SUNAT
-            return '20100392403De';
+            return '20100392403Qa';
         }
     }
     public function getUsuarioSol($processType = 1) {
@@ -39,7 +39,7 @@ class EmisorCredentials {
             // return 'http://egestor.dev.efacturacion.pe/ws_tci/service.asmx?wsdl';
             # WCF
             // return 'https://egestor.dev.efacturacion.pe/ws_tci/service.svc?wsdl';
-            return 'http://egestor.dev.efacturacion.pe/wcf_tci/service.svc?wsdl';
+            return 'http://egestor.qa.efacturacion.pe/wcf_tci/service.svc?wsdl';
         }
     }
     public function getRutaWSRG($processType = 1) {

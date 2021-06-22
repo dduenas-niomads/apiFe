@@ -12,13 +12,11 @@ class Apisunat {
             <Invoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
                 <ext:UBLExtensions>
                     <ext:UBLExtension>
-                        <ext:ExtensionContent>
-                        </ext:ExtensionContent>
+                        <ext:ExtensionContent />
                     </ext:UBLExtension>
                 </ext:UBLExtensions>
                 <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
                 <cbc:CustomizationID schemeAgencyName="PE:SUNAT">2.0</cbc:CustomizationID>
-                <cbc:ProfileID schemeName="Tipo de Operacion" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">' . $cabecera["TIPO_OPERACION"] . '</cbc:ProfileID>
                 <cbc:ID>' . $cabecera["NRO_COMPROBANTE"] . '</cbc:ID>
                 <cbc:IssueDate>' . $cabecera["FECHA_DOCUMENTO"] . '</cbc:IssueDate>
                 <cbc:IssueTime>00:00:00</cbc:IssueTime>
@@ -26,7 +24,7 @@ class Apisunat {
                 <cbc:InvoiceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01" listID="0101" name="Tipo de Operacion" listSchemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">' . $cabecera["COD_TIPO_DOCUMENTO"] . '</cbc:InvoiceTypeCode>';
                 if ($cabecera["TOTAL_LETRAS"] <> "") {
                         $xmlCPE = $xmlCPE .
-                            '<cbc:Note languageLocaleID="1000">' . $cabecera["TOTAL_LETRAS"] . '</cbc:Note>';
+                            '<cbc:Note languageLocaleID="1000"><![CDATA[' . $cabecera["TOTAL_LETRAS"] . ']]></cbc:Note>';
                     }
                     $xmlCPE = $xmlCPE .
                             '<cbc:DocumentCurrencyCode listID="ISO 4217 Alpha" listName="Currency" listAgencyName="United Nations Economic Commission for Europe">' . $cabecera["COD_MONEDA"] . '</cbc:DocumentCurrencyCode>
@@ -47,18 +45,18 @@ class Apisunat {
                     }
                     $xmlCPE = $xmlCPE .
                         '<cac:Signature>
-                            <cbc:ID>' . $cabecera["NRO_COMPROBANTE"] . '</cbc:ID>
+                            <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
                             <cac:SignatoryParty>
                                 <cac:PartyIdentification>
                                     <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
                                 </cac:PartyIdentification>
                                 <cac:PartyName>
-                                    <cbc:Name>' . $cabecera["RAZON_SOCIAL_EMPRESA"] . '</cbc:Name>
+                                    <cbc:Name><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:Name>
                                 </cac:PartyName>
                             </cac:SignatoryParty>
                             <cac:DigitalSignatureAttachment>
                                 <cac:ExternalReference>
-                                    <cbc:URI>#' . $cabecera["NRO_COMPROBANTE"] . '</cbc:URI>
+                                    <cbc:URI>#AldeSign</cbc:URI>
                                 </cac:ExternalReference>
                             </cac:DigitalSignatureAttachment>
                         </cac:Signature>
@@ -70,13 +68,6 @@ class Apisunat {
                         <cac:PartyName>
                             <cbc:Name><![CDATA[' . $cabecera["NOMBRE_COMERCIAL_EMPRESA"] . ']]></cbc:Name>
                         </cac:PartyName>
-                        <cac:PartyTaxScheme>
-                            <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:RegistrationName>
-                            <cbc:CompanyID schemeID="' . $cabecera["TIPO_DOCUMENTO_EMPRESA"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:CompanyID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_EMPRESA"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
-                            </cac:TaxScheme>
-                        </cac:PartyTaxScheme>
                         <cac:PartyLegalEntity>
                             <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:RegistrationName>
                             <cac:RegistrationAddress>
@@ -93,9 +84,6 @@ class Apisunat {
                                 </cac:Country>
                             </cac:RegistrationAddress>
                         </cac:PartyLegalEntity>
-                        <cac:Contact>
-                            <cbc:Name><![CDATA[' . $cabecera["CONTACTO_EMPRESA"] . ']]></cbc:Name>
-                        </cac:Contact>
                     </cac:Party>
                 </cac:AccountingSupplierParty>
                 <cac:AccountingCustomerParty>
@@ -103,23 +91,9 @@ class Apisunat {
                         <cac:PartyIdentification>
                             <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_CLIENTE"] . '" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_CLIENTE"] . '</cbc:ID>
                         </cac:PartyIdentification>
-                        <cac:PartyName>
-                            <cbc:Name><![CDATA[' . $cabecera["RAZON_SOCIAL_CLIENTE"] . ']]></cbc:Name>
-                        </cac:PartyName>
-                        <cac:PartyTaxScheme>
-                            <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_CLIENTE"] . ']]></cbc:RegistrationName>
-                            <cbc:CompanyID schemeID="' . $cabecera["TIPO_DOCUMENTO_CLIENTE"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_CLIENTE"] . '</cbc:CompanyID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_CLIENTE"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_CLIENTE"] . '</cbc:ID>
-                            </cac:TaxScheme>
-                        </cac:PartyTaxScheme>
                         <cac:PartyLegalEntity>
                             <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_CLIENTE"] . ']]></cbc:RegistrationName>
                             <cac:RegistrationAddress>
-                                <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI">' . $cabecera["COD_UBIGEO_CLIENTE"] . '</cbc:ID>
-                                <cbc:CityName><![CDATA[' . $cabecera["DEPARTAMENTO_CLIENTE"] . ']]></cbc:CityName>
-                                <cbc:CountrySubentity><![CDATA[' . $cabecera["PROVINCIA_CLIENTE"] . ']]></cbc:CountrySubentity>
-                                <cbc:District><![CDATA[' . $cabecera["DISTRITO_CLIENTE"] . ']]></cbc:District>
                                 <cac:AddressLine>
                                     <cbc:Line><![CDATA[' . $cabecera["DIRECCION_CLIENTE"] . ']]></cbc:Line>
                                 </cac:AddressLine>
@@ -130,13 +104,10 @@ class Apisunat {
                         </cac:PartyLegalEntity>
                     </cac:Party>
                 </cac:AccountingCustomerParty>
-                <cac:AllowanceCharge>
-                    <cbc:ChargeIndicator>false</cbc:ChargeIndicator>
-                    <cbc:AllowanceChargeReasonCode listName="Cargo/descuento" listAgencyName="PE:SUNAT" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo53">02</cbc:AllowanceChargeReasonCode>
-                    <cbc:MultiplierFactorNumeric>0.00</cbc:MultiplierFactorNumeric>
-                    <cbc:Amount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:Amount>
-                    <cbc:BaseAmount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:BaseAmount>
-                </cac:AllowanceCharge>
+                <cac:PaymentTerms>
+                    <cbc:ID>FormaPago</cbc:ID>
+                    <cbc:PaymentMeansID>Contado</cbc:PaymentMeansID>
+                </cac:PaymentTerms>                
                 <cac:TaxTotal>
                     <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_IGV"] . '</cbc:TaxAmount>
                     <cac:TaxSubtotal>
@@ -312,7 +283,6 @@ class Apisunat {
                             <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtIMPORTE_DET"] . '</cbc:TaxableAmount>
                             <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtIGV"] . '</cbc:TaxAmount>
                             <cac:TaxCategory>
-                                <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">S</cbc:ID>
                                 <cbc:Percent>' . $cabecera["POR_IGV"] . '</cbc:Percent>
                                 <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">' . $detalle[$i]["txtCOD_TIPO_OPERACION"] . '</cbc:TaxExemptionReasonCode>
                                 <cac:TaxScheme>
@@ -336,6 +306,8 @@ class Apisunat {
                 }
 
         $xmlCPE = $xmlCPE . '</Invoice>';
+        var_dump($xmlCPE);
+        exit;
         $xmlCPE2 = '<?xml version="1.0" encoding="UTF-8"?>
         <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
            <s:Body>
