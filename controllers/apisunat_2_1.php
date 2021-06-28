@@ -8,456 +8,165 @@ class Apisunat {
         $doc->preserveWhiteSpace = TRUE;
 		$doc->encoding = 'utf-8';
 
-        $xmlCPE = '<?xml version="1.0" encoding="utf-8"?>
-            <Invoice xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns="urn:oasis:names:specification:ubl:schema:xsd:Invoice-2">
-                <ext:UBLExtensions>
-                    <ext:UBLExtension>
-                        <ext:ExtensionContent />
-                    </ext:UBLExtension>
-                </ext:UBLExtensions>
-                <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
-                <cbc:CustomizationID schemeAgencyName="PE:SUNAT">2.0</cbc:CustomizationID>
-                <cbc:ID>' . $cabecera["NRO_COMPROBANTE"] . '</cbc:ID>
-                <cbc:IssueDate>' . $cabecera["FECHA_DOCUMENTO"] . '</cbc:IssueDate>
-                <cbc:IssueTime>00:00:00</cbc:IssueTime>
-                <cbc:DueDate>' . $cabecera["FECHA_VTO"] . '</cbc:DueDate>
-                <cbc:InvoiceTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01" listID="0101" name="Tipo de Operacion" listSchemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo51">' . $cabecera["COD_TIPO_DOCUMENTO"] . '</cbc:InvoiceTypeCode>';
-                if ($cabecera["TOTAL_LETRAS"] <> "") {
-                        $xmlCPE = $xmlCPE .
-                            '<cbc:Note languageLocaleID="1000"><![CDATA[' . $cabecera["TOTAL_LETRAS"] . ']]></cbc:Note>';
-                    }
-                    $xmlCPE = $xmlCPE .
-                            '<cbc:DocumentCurrencyCode listID="ISO 4217 Alpha" listName="Currency" listAgencyName="United Nations Economic Commission for Europe">' . $cabecera["COD_MONEDA"] . '</cbc:DocumentCurrencyCode>
-                        <cbc:LineCountNumeric>' . count($detalle) . '</cbc:LineCountNumeric>';
-                    if ($cabecera["NRO_OTR_COMPROBANTE"] <> "") {
-                        $xmlCPE = $xmlCPE .
-                                '<cac:OrderReference>
-                                <cbc:ID>' . $cabecera["NRO_OTR_COMPROBANTE"] . '</cbc:ID>
-                        </cac:OrderReference>';
-                    }
-                    if ($cabecera["NRO_GUIA_REMISION"] <> "") {
-                    $xmlCPE = $xmlCPE .
-                            '<cac:DespatchDocumentReference>
-                    <cbc:ID>' . $cabecera["NRO_GUIA_REMISION"] . '</cbc:ID>
-                    <cbc:IssueDate>' . $cabecera["FECHA_GUIA_REMISION"] . '</cbc:IssueDate>
-                    <cbc:DocumentTypeCode listAgencyName="PE:SUNAT" listName="Tipo de Documento" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo01">' . $cabecera["COD_GUIA_REMISION"] . '</cbc:DocumentTypeCode>
-                        </cac:DespatchDocumentReference>';
-                    }
-                    $xmlCPE = $xmlCPE .
-                        '<cac:Signature>
-                            <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
-                            <cac:SignatoryParty>
-                                <cac:PartyIdentification>
-                                    <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
-                                </cac:PartyIdentification>
-                                <cac:PartyName>
-                                    <cbc:Name><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:Name>
-                                </cac:PartyName>
-                            </cac:SignatoryParty>
-                            <cac:DigitalSignatureAttachment>
-                                <cac:ExternalReference>
-                                    <cbc:URI>#AldeSign</cbc:URI>
-                                </cac:ExternalReference>
-                            </cac:DigitalSignatureAttachment>
-                        </cac:Signature>
-                <cac:AccountingSupplierParty>
-                    <cac:Party>
-                        <cac:PartyIdentification>
-                            <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_EMPRESA"] . '" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
-                        </cac:PartyIdentification>
-                        <cac:PartyName>
-                            <cbc:Name><![CDATA[' . $cabecera["NOMBRE_COMERCIAL_EMPRESA"] . ']]></cbc:Name>
-                        </cac:PartyName>
-                        <cac:PartyLegalEntity>
-                            <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:RegistrationName>
-                            <cac:RegistrationAddress>
-                                <cbc:ID schemeName="Ubigeos" schemeAgencyName="PE:INEI"><![CDATA[' . (isset($cabecera["CODIGO_UBIGEO_EMPRESA"]) ? $cabecera["CODIGO_UBIGEO_EMPRESA"] : "150113") . ']]></cbc:ID>
-                                <cbc:AddressTypeCode listAgencyName="PE:SUNAT" listName="Establecimientos anexos">0000</cbc:AddressTypeCode>
-                                <cbc:CityName><![CDATA[' . $cabecera["DEPARTAMENTO_EMPRESA"] . ']]></cbc:CityName>
-                                <cbc:CountrySubentity><![CDATA[' . $cabecera["PROVINCIA_EMPRESA"] . ']]></cbc:CountrySubentity>
-                                <cbc:District><![CDATA[' . $cabecera["DISTRITO_EMPRESA"] . ']]></cbc:District>
-                                <cac:AddressLine>
-                                    <cbc:Line><![CDATA[' . $cabecera["DIRECCION_EMPRESA"] . ']]></cbc:Line>
-                                </cac:AddressLine>
-                                <cac:Country>
-                                    <cbc:IdentificationCode listID="ISO 3166-1" listAgencyName="United Nations Economic Commission for Europe" listName="Country">' . $cabecera["CODIGO_PAIS_EMPRESA"] . '</cbc:IdentificationCode>
-                                </cac:Country>
-                            </cac:RegistrationAddress>
-                        </cac:PartyLegalEntity>
-                    </cac:Party>
-                </cac:AccountingSupplierParty>
-                <cac:AccountingCustomerParty>
-                    <cac:Party>
-                        <cac:PartyIdentification>
-                            <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_CLIENTE"] . '" schemeName="Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_CLIENTE"] . '</cbc:ID>
-                        </cac:PartyIdentification>
-                        <cac:PartyLegalEntity>
-                            <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_CLIENTE"] . ']]></cbc:RegistrationName>
-                            <cac:RegistrationAddress>
-                                <cac:AddressLine>
-                                    <cbc:Line><![CDATA[' . $cabecera["DIRECCION_CLIENTE"] . ']]></cbc:Line>
-                                </cac:AddressLine>
-                                <cac:Country>
-                                    <cbc:IdentificationCode listID="ISO 3166-1" listAgencyName="United Nations Economic Commission for Europe" listName="Country">' . $cabecera["COD_PAIS_CLIENTE"] . '</cbc:IdentificationCode>
-                                </cac:Country>
-                            </cac:RegistrationAddress>
-                        </cac:PartyLegalEntity>
-                    </cac:Party>
-                </cac:AccountingCustomerParty>
-                <cac:PaymentTerms>
-                    <cbc:ID>FormaPago</cbc:ID>
-                    <cbc:PaymentMeansID>Contado</cbc:PaymentMeansID>
-                </cac:PaymentTerms>                
-                <cac:TaxTotal>
-                    <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_IGV"] . '</cbc:TaxAmount>
-                    <cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_GRAVADAS"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_IGV"] . '</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">S</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">1000</cbc:ID>
-                                <cbc:Name>IGV</cbc:Name>
-                                <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            if ($cabecera["TOTAL_ISC"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_ISC"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_ISC"] . '</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">S</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">2000</cbc:ID>
-                                <cbc:Name>ISC</cbc:Name>
-                                <cbc:TaxTypeCode>EXC</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            //CAMPO NUEVO
-                            if ($cabecera["TOTAL_EXPORTACION"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_EXPORTACION"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">G</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9995</cbc:ID>
-                                <cbc:Name>EXP</cbc:Name>
-                                <cbc:TaxTypeCode>FRE</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            if ($cabecera["TOTAL_GRATUITAS"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_GRATUITAS"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">Z</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9996</cbc:ID>
-                                <cbc:Name>GRA</cbc:Name>
-                                <cbc:TaxTypeCode>FRE</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            if ($cabecera["TOTAL_EXONERADAS"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_EXONERADAS"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">E</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9997</cbc:ID>
-                                <cbc:Name>EXO</cbc:Name>
-                                <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            if ($cabecera["TOTAL_INAFECTA"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_INAFECTA"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">O</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9998</cbc:ID>
-                                <cbc:Name>INA</cbc:Name>
-                                <cbc:TaxTypeCode>FRE</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            if ($cabecera["TOTAL_OTR_IMP"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_OTR_IMP"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_OTR_IMP"] . '</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cbc:ID schemeID="UN/ECE 5305" schemeName="Tax Category Identifier" schemeAgencyName="United Nations Economic Commission for Europe">S</cbc:ID>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">9999</cbc:ID>
-                                <cbc:Name>OTR</cbc:Name>
-                                <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            if ($cabecera["TOTAL_ICBPER"]>0){
-                            $xmlCPE = $xmlCPE .
-                            '<cac:TaxSubtotal>
-                        <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_ICBPER"] . '</cbc:TaxableAmount>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_ICBPER"] . '</cbc:TaxAmount>
-                        <cac:TaxCategory>
-                            <cac:TaxScheme>
-                                <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">7152</cbc:ID>
-                                <cbc:Name>ICBPER</cbc:Name>
-                                <cbc:TaxTypeCode>OTH</cbc:TaxTypeCode>
-                            </cac:TaxScheme>
-                        </cac:TaxCategory>
-                    </cac:TaxSubtotal>';
-                            }
-                            //TOTAL=GRAVADA+IGV+EXONERADA
-                            //NO ENTRA GRATUITA(INAFECTA) NI DESCUENTO
-                            //SUB_TOTAL=PRECIO(SIN IGV) * CANTIDAD
-                $xmlCPE = $xmlCPE .
-                '</cac:TaxTotal>
-                <cac:LegalMonetaryTotal>
-                    <cbc:LineExtensionAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["SUB_TOTAL"] . '</cbc:LineExtensionAmount>
-                    <cbc:TaxInclusiveAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL"] . '</cbc:TaxInclusiveAmount>
-                    <cbc:AllowanceTotalAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL_DESCUENTO"] . '</cbc:AllowanceTotalAmount>
-                    <cbc:ChargeTotalAmount currencyID="' . $cabecera["COD_MONEDA"] . '">0.00</cbc:ChargeTotalAmount>
-                    <cbc:PayableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $cabecera["TOTAL"] . '</cbc:PayableAmount>
-                </cac:LegalMonetaryTotal>';
-                for ($i = 0; $i < count($detalle); $i++) {
-                    $tributeType = '1000';
-                    $tributeName = 'IGV';
-                    $tributeDescription = 'VAT';
-                    switch ((int)$detalle[$i]["txtCOD_TIPO_OPERACION"]) {
-                        // EXONERADO 
-                        case 20:
-                            $tributeType = '9997';
-                            $tributeName = 'EXO';
-                            $tributeDescription = 'VAT';
-                            break;
-                        // INAFECTO
-                        case 30:
-                            $tributeType = '9998';
-                            $tributeName = 'INA';
-                            $tributeDescription = 'FRE';
-                            break;
-                        // GRATUITO
-                        case 21:
-                            $tributeType = '9996';
-                            $tributeName = 'GRA';
-                            $tributeDescription = 'FRE';
-                            break;
-                        default:
-                            # code...
-                            break;
-                    }
-
-                    $xmlCPE = $xmlCPE . '<cac:InvoiceLine>
-                    <cbc:ID>' . $detalle[$i]["txtITEM"] . '</cbc:ID>
-                    <cbc:InvoicedQuantity unitCode="' . $detalle[$i]["txtUNIDAD_MEDIDA_DET"] . '" unitCodeListID="UN/ECE rec 20" unitCodeListAgencyName="United Nations Economic Commission for Europe">' . $detalle[$i]["txtCANTIDAD_DET"] . '</cbc:InvoicedQuantity>
-                    <cbc:LineExtensionAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtIMPORTE_DET"] . '</cbc:LineExtensionAmount>
-                    <cac:PricingReference>
-                        <cac:AlternativeConditionPrice>
-                            <cbc:PriceAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtPRECIO_DET"] . '</cbc:PriceAmount>
-                            <cbc:PriceTypeCode listName="Tipo de Precio" listAgencyName="PE:SUNAT" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo16">' . $detalle[$i]["txtPRECIO_TIPO_CODIGO"] . '</cbc:PriceTypeCode>
-                        </cac:AlternativeConditionPrice>
-                    </cac:PricingReference>
-                    <cac:TaxTotal>
-                        <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtIGV"] . '</cbc:TaxAmount>
-                        <cac:TaxSubtotal>
-                            <cbc:TaxableAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtIMPORTE_DET"] . '</cbc:TaxableAmount>
-                            <cbc:TaxAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtIGV"] . '</cbc:TaxAmount>
-                            <cac:TaxCategory>
-                                <cbc:Percent>' . $cabecera["POR_IGV"] . '</cbc:Percent>
-                                <cbc:TaxExemptionReasonCode listAgencyName="PE:SUNAT" listName="Afectacion del IGV" listURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo07">' . $detalle[$i]["txtCOD_TIPO_OPERACION"] . '</cbc:TaxExemptionReasonCode>
-                                <cac:TaxScheme>
-                                    <cbc:ID schemeID="UN/ECE 5153" schemeName="Codigo de tributos" schemeAgencyName="PE:SUNAT">' . $tributeType . '</cbc:ID>
-                                    <cbc:Name>' . $tributeName . '</cbc:Name>
-                                    <cbc:TaxTypeCode>' . $tributeDescription . '</cbc:TaxTypeCode>
-                                </cac:TaxScheme>
-                            </cac:TaxCategory>
-                        </cac:TaxSubtotal>
-                    </cac:TaxTotal>
-                    <cac:Item>
-                        <cbc:Description><![CDATA[' . $validacion->replace_invalid_caracters((isset($detalle[$i]["txtDESCRIPCION_DET"])) ? $detalle[$i]["txtDESCRIPCION_DET"] : "") . ']]></cbc:Description>
-                        <cac:SellersItemIdentification>
-                            <cbc:ID><![CDATA[' . $validacion->replace_invalid_caracters((isset($detalle[$i]["txtCODIGO_DET"])) ? $detalle[$i]["txtCODIGO_DET"] : "") . ']]></cbc:ID>
-                        </cac:SellersItemIdentification>
-                    </cac:Item>
-                    <cac:Price>
-                        <cbc:PriceAmount currencyID="' . $cabecera["COD_MONEDA"] . '">' . $detalle[$i]["txtPRECIO_SIN_IGV_DET"] . '</cbc:PriceAmount>
-                    </cac:Price>
-                    </cac:InvoiceLine>';
-                }
-
-        $xmlCPE = $xmlCPE . '</Invoice>';
-        var_dump($xmlCPE);
-        exit;
-        $xmlCPE2 = '<?xml version="1.0" encoding="UTF-8"?>
-        <s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
-           <s:Body>
-              <Registrar xmlns="http://tempuri.org/">
-                 <oGeneral xmlns:a="http://schemas.datacontract.org/2004/07/Libreria.XML.Facturacion" 
-                    xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
-                    <a:IdSeguimiento>0</a:IdSeguimiento>
+        $xmlCPE = '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+        <s:Body>
+            <Registrar xmlns="http://tempuri.org/">
+                <oGeneral xmlns:a="http://schemas.datacontract.org/2004/07/Libreria.XML.Facturacion" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                    <a:Autenticacion>
+                        <a:Clave>'.$cabecera["EMISOR_PASS_SOL"].'</a:Clave>
+                        <a:Ruc>'.$cabecera["EMISOR_RUC"].'</a:Ruc>
+                    </a:Autenticacion>
                     <a:oENComprobante>
-                       <a:CantidadRegistros>0</a:CantidadRegistros>
-                       <a:ComprobanteDetalle>
-                          <a:ENComprobanteDetalle>
-                             <a:BaseComision>0</a:BaseComision>
-                             <a:Bulto>0</a:Bulto>
-                             <a:Cantidad>4</a:Cantidad>
-                             <a:Codigo>01</a:Codigo>
-                             <a:CodigoTipoPrecio>01</a:CodigoTipoPrecio>
-                             <a:Comision>0</a:Comision>
-                             <a:ComprobanteDetalleImpuestos>
-                                <a:ENComprobanteDetalleImpuestos>
-                                   <a:AfectacionIGV>10</a:AfectacionIGV>
-                                   <a:CodigoTributo>1000</a:CodigoTributo>
-                                   <a:CodigoUN>VAT</a:CodigoUN>
-                                   <a:DesTributo>IGV</a:DesTributo>
-                                   <a:IdComprobanteDetalle>0</a:IdComprobanteDetalle>
-                                   <a:IdComprobanteDetalleImpuestos>0</a:IdComprobanteDetalleImpuestos>
-                                   <a:ImpGratuito>0</a:ImpGratuito>
-                                   <a:ImporteExplicito>3132.00</a:ImporteExplicito>
-                                   <a:ImporteTributo>3132.00</a:ImporteTributo>
-                                   <a:ImpuestoPorcentual>0</a:ImpuestoPorcentual>
-                                </a:ENComprobanteDetalleImpuestos>
-                             </a:ComprobanteDetalleImpuestos>
-                             <a:Costo>0</a:Costo>
-                             <a:Descripcion>Por servicios de consultoría</a:Descripcion>
-                             <a:DescuentoIncIgv>0</a:DescuentoIncIgv>
-                             <a:Determinante>1</a:Determinante>
-                             <a:Fecha>0001-01-01T00:00:00</a:Fecha>
-                             <a:FechaCaducidad>0001-01-01T00:00:00</a:FechaCaducidad>
-                             <a:IdComprobante>0</a:IdComprobante>
-                             <a:IdComprobanteDetalle>0</a:IdComprobanteDetalle>
-                             <a:ImporteBrutoItem>0</a:ImporteBrutoItem>
-                             <a:Item>1</a:Item>
-                             <a:Marca>SUSUKI</a:Marca>
-                             <a:Modelo>SUSUKI SDX</a:Modelo>
-                             <a:Nota>Nota en el detalle</a:Nota>
-                             <a:PesoNeto>0</a:PesoNeto>
-                             <a:PorcentajeDescuento>0</a:PorcentajeDescuento>
-                             <a:PrecioVentaItem>0</a:PrecioVentaItem>
-                             <a:Total>17400</a:Total>
-                             <a:UnidadComercial>ZZ</a:UnidadComercial>
-                             <a:ValorVentaUnitario>4350</a:ValorVentaUnitario>
-                             <a:ValorVentaUnitarioIncIgv>5133.00</a:ValorVentaUnitarioIncIgv>
-                          </a:ENComprobanteDetalle>
-                       </a:ComprobanteDetalle>
-                       <a:ComprobanteImpuestos>
-                          <a:ENComprobanteImpuestos>
-                             <a:CodigoTributo>1000</a:CodigoTributo>
-                             <a:CodigoUN>VAT</a:CodigoUN>
-                             <a:DesTributo>IGV</a:DesTributo>
-                             <a:IdComprobante>0</a:IdComprobante>
-                             <a:IdComprobanteImpuestos>0</a:IdComprobanteImpuestos>
-                             <a:ImporteExplicito>3132.00</a:ImporteExplicito>
-                             <a:ImporteTributo>3132.00</a:ImporteTributo>
-                             <a:Porcentaje>0</a:Porcentaje>
-                          </a:ENComprobanteImpuestos>
-                       </a:ComprobanteImpuestos>
-                       <a:ComprobanteMontosAdicionalesObligatorios>
-                          <a:ENComprobanteMontosAdicionalesObligatorios>
-                             <a:Codigo>1001</a:Codigo>
-                             <a:IdComprobante>0</a:IdComprobante>
-                             <a:IdComprobanteMontosAdicionales>0</a:IdComprobanteMontosAdicionales>
-                             <a:Monto>17400</a:Monto>
-                          </a:ENComprobanteMontosAdicionalesObligatorios>
-                          <a:ENComprobanteMontosAdicionalesObligatorios>
-                             <a:Codigo>1002</a:Codigo>
-                             <a:IdComprobante>0</a:IdComprobante>
-                             <a:IdComprobanteMontosAdicionales>0</a:IdComprobanteMontosAdicionales>
-                             <a:Monto>0</a:Monto>
-                          </a:ENComprobanteMontosAdicionalesObligatorios>
-                          <a:ENComprobanteMontosAdicionalesObligatorios>
-                             <a:Codigo>1003</a:Codigo>
-                             <a:IdComprobante>0</a:IdComprobante>
-                             <a:IdComprobanteMontosAdicionales>0</a:IdComprobanteMontosAdicionales>
-                             <a:Monto>0</a:Monto>
-                          </a:ENComprobanteMontosAdicionalesObligatorios>
-                       </a:ComprobanteMontosAdicionalesObligatorios>
-                       <a:CorreoElectronico>lramirez@tci.net.pe</a:CorreoElectronico>
-                       <a:DescuentoGlobal>0</a:DescuentoGlobal>
-                       <a:Fecha>0001-01-01T00:00:00</a:Fecha>
-                       <a:FechaEmision>2016-10-05T09:32:46.011-05:00</a:FechaEmision>
-                       <a:FechaEmisionDesde>0001-01-01T00:00:00</a:FechaEmisionDesde>
-                       <a:FechaEmisionHasta>0001-01-01T00:00:00</a:FechaEmisionHasta>
-                       <a:FechaObtencion>0001-01-01T00:00:00</a:FechaObtencion>
-                       <a:FiltroFechas>false</a:FiltroFechas>
-                       <a:Glosa>Pruebas de Envio</a:Glosa>
-                       <a:IdComp>0</a:IdComp>
-                       <a:IdComprobante>0</a:IdComprobante>
-                       <a:IdComprobanteCabecera>0</a:IdComprobanteCabecera>
-                       <a:IdCorreoRecepcion>0</a:IdCorreoRecepcion>
-                       <a:IdEmpresa>0</a:IdEmpresa>
-                       <a:IdPuntoVenta>0</a:IdPuntoVenta>
-                       <a:IdSeguimiento>0</a:IdSeguimiento>
-                       <a:IdTipoOrigen>0</a:IdTipoOrigen>
-                       <a:IdTransaccion>0</a:IdTransaccion>
-                       <a:IdUsuario>0</a:IdUsuario>
-                       <a:ImporteTotal>0</a:ImporteTotal>
-                       <a:Moneda>1</a:Moneda>
-                       <a:MontoExonerado>0</a:MontoExonerado>
-                       <a:MontoGratuito>0</a:MontoGratuito>
-                       <a:MontoIGV>0</a:MontoIGV>
-                       <a:MontoISC>0</a:MontoISC>
-                       <a:MontoInafecto>0</a:MontoInafecto>
-                       <a:Numero>69</a:Numero>
-                       <a:NumeroPagina>0</a:NumeroPagina>
-                       <a:OtroConceptoPago>0</a:OtroConceptoPago>
-                       <a:RazonSocial>panizo</a:RazonSocial>
-                       <a:Ruc>20111111111</a:Ruc>
-                       <a:Serie>FX13</a:Serie>
-                       <a:TipoComprobante>01</a:TipoComprobante>
-                       <a:TipoDocumentoIdentidad>6</a:TipoDocumentoIdentidad>
-                       <a:TotalCargo>0</a:TotalCargo>
-                       <a:TotalImporteIncImpuesto>0</a:TotalImporteIncImpuesto>
-                       <a:TotalPrepago>0</a:TotalPrepago>
-                       <a:flagAdjunto>0</a:flagAdjunto>
+                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>';
+                        for ($i = 0; $i < count($detalle); $i++) {
+                            $xmlCPE = $xmlCPE .'<a:ComprobanteDetalle>
+                            <a:ENComprobanteDetalle>
+                                <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
+                                <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
+                                <a:CodigoTipoPrecio>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</a:CodigoTipoPrecio>
+                                <a:ComprobanteDetalleImpuestos>
+                                    <a:ENComprobanteDetalleImpuestos>
+                                        <a:AfectacionIGV>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</a:AfectacionIGV>
+                                        <a:CodigoTributo>1000</a:CodigoTributo>
+                                        <a:CodigoUN>VAT</a:CodigoUN>
+                                        <a:DesTributo>IGV</a:DesTributo>
+                                        <a:ImporteExplicito>'.$detalle[$i]["txtIGV"].'</a:ImporteExplicito>
+                                        <a:ImporteTributo>'.$detalle[$i]["txtIGV"].'</a:ImporteTributo>
+                                        <a:MontoBase>'.$detalle[$i]["txtIMPORTE_DET"].'</a:MontoBase>
+                                        <a:TasaAplicada>18</a:TasaAplicada>
+                                    </a:ENComprobanteDetalleImpuestos>
+                                </a:ComprobanteDetalleImpuestos>
+                                <a:Descripcion>'.$detalle[$i]["txtDESCRIPCION_DET"].'</a:Descripcion>
+                                <a:Determinante>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Determinante>
+                                <a:ImpuestoTotal>'.$detalle[$i]["txtIGV"].'</a:ImpuestoTotal>
+                                <a:Item>' . $detalle[$i]["txtITEM"] . '</a:Item>
+                                <a:PrecioVentaItem>'.$detalle[$i]["txtPRECIO_DET"].'</a:PrecioVentaItem>
+                                <a:Total>'.$detalle[$i]["txtSUB_TOTAL_DET"].'</a:Total>
+                                <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
+                                <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
+                                <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
+                            </a:ENComprobanteDetalle>
+                        </a:ComprobanteDetalle>';
+                    }
+                        $xmlCPE = $xmlCPE .'<a:ComprobanteGrillaCuenta>
+                            <a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>BCP SOLES</a:Descripcion>
+                                <a:Valor1>SOLES</a:Valor1>
+                                <a:Valor2>194-1333331-0-30</a:Valor2>
+                                <a:Valor3>002-194-006666661030-93</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>
+                            <a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>BCP DOLAR</a:Descripcion>
+                                <a:Valor1>DÓLARES AMERICANOS</a:Valor1>
+                                <a:Valor2>194-1444417-1-20</a:Valor2>
+                                <a:Valor3>002-194-001643555555-95</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>
+                        </a:ComprobanteGrillaCuenta>
+                        <a:ComprobantePropiedadesAdicionales>
+                            <a:ENComprobantePropiedadesAdicionales>
+                                <a:Codigo>1000</a:Codigo>
+                                <a:Valor>'.$cabecera["TOTAL_LETRAS"].'</a:Valor>
+                            </a:ENComprobantePropiedadesAdicionales>
+                        </a:ComprobantePropiedadesAdicionales>
+                        <a:FechaEmision>'.$cabecera["FECHA_DOCUMENTO"].'</a:FechaEmision>
+                        <a:FormaPago>
+                            <a:ENFormaPago>
+                                <a:CodigoFormaPago>001</a:CodigoFormaPago>
+                                <a:DiasVencimiento>30</a:DiasVencimiento>
+                                <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
+                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
+                            </a:ENFormaPago>
+                        </a:FormaPago>
+                        <a:FormaPagoSunat>
+                            <a:TipoFormaPago>1</a:TipoFormaPago>
+                        </a:FormaPagoSunat>
+                        <a:HoraEmision>12:00:00</a:HoraEmision>
+                        <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
+                        <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
+                        <a:MontosTotales>
+                            <a:Gravado>
+                                <a:GravadoIGV>
+                                    <a:Base>'.$cabecera["SUB_TOTAL"].'</a:Base>
+                                    <a:Porcentaje>'.$cabecera["POR_IGV"].'</a:Porcentaje>
+                                    <a:ValorImpuesto>'.$cabecera["TOTAL_IGV"].'</a:ValorImpuesto>
+                                </a:GravadoIGV>
+                            <a:Total>'.$cabecera["SUB_TOTAL"].'</a:Total>
+                            </a:Gravado>
+                        </a:MontosTotales>  
+                        <a:NrodePedido>'.$cabecera["NRO_GUIA_REMISION"].'</a:NrodePedido>                           
+                        <a:Numero>'.$cabecera["NRO_COMPROBANTE"].'</a:Numero>               
+                        <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_CLIENTE"].'</a:RazonSocial>
+                        <a:Receptor>
+                            <a:ENReceptor>
+                                <a:Calle>'.$cabecera["DIRECCION_CLIENTE"].'</a:Calle>
+                                <a:Codigo>'.$cabecera["COD_UBIGEO_CLIENTE"].'</a:Codigo>
+                                <a:CodPais>'.$cabecera["COD_PAIS_CLIENTE"].'</a:CodPais>
+                                <a:Departamento>'.$cabecera["DEPARTAMENTO_CLIENTE"].'</a:Departamento>
+                                <a:Distrito>'.$cabecera["DISTRITO_CLIENTE"].'</a:Distrito>
+                                <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
+                            </a:ENReceptor>
+                        </a:Receptor>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
+                        <a:Sucursal>
+                            <a:ENSucursal>
+                                <a:Direccion>'.$cabecera["DIRECCION_EMPRESA"].'</a:Direccion>
+                                <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
+                                <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
+                                <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
+                            </a:ENSucursal>
+                        </a:Sucursal>
+                        <a:Texto>
+                            <a:ENTexto>
+                                <a:Texto1>TEXTO EN ENCABEZADO Texto 1</a:Texto1>
+                                <a:Texto10>Texto 10</a:Texto10>               
+                                <a:Texto11>Texto 11</a:Texto11>                     
+                                <a:Texto12>Twxto 12</a:Texto12>                     
+                                <a:Texto13>Texto 13</a:Texto13>                     
+                                <a:Texto14>Texto 14</a:Texto14> 
+                                <a:Texto2>REFERENCIA Texto 2</a:Texto2>                     
+                                <a:Texto3>2021013 Texto 3</a:Texto3>                     
+                                <a:Texto4>DEL Texto 4</a:Texto4>                     
+                                <a:Texto5>AL Texto 5</a:Texto5>                     
+                                <a:Texto6>DIAS Texto 6</a:Texto6>                     
+                                <a:Texto7>Cant Texto 7</a:Texto7>                     
+                                <a:Texto8>Bultos Texto 8</a:Texto8>                     
+                                <a:Texto9>Valor Texto 9</a:Texto9>                  
+                            </a:ENTexto>
+                        </a:Texto>
+                        <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
+                        <a:TipoDocumentoIdentidad>'.$cabecera["TIPO_DOCUMENTO_CLIENTE"].'</a:TipoDocumentoIdentidad>
+                        <a:TipoOperacion>'.$cabecera["TIPO_OPERACION"].'</a:TipoOperacion>
+                        <a:TipoPlantilla>ST1</a:TipoPlantilla>
+                        <a:TotalImpuesto>'.$cabecera["TOTAL_IGV"].'</a:TotalImpuesto>
+                        <a:TotalPrecioVenta>'.$cabecera["TOTAL"].'</a:TotalPrecioVenta>
+                        <a:TotalValorVenta>'.$cabecera["TOTAL_GRAVADAS"].'</a:TotalValorVenta>
+                        <a:VersionUbl>2.1</a:VersionUbl>
                     </a:oENComprobante>
                     <a:oENEmpresa>
-                       <a:Calle>av nicolas moreyra</a:Calle>
-                       <a:CodDistrito>150140</a:CodDistrito>
-                       <a:CodPais>1</a:CodPais>
-                       <a:CodigoTipoDocumento>6</a:CodigoTipoDocumento>
-                       <a:Correo>correo@tci.net.pe</a:Correo>
-                       <a:Departamento>Lima</a:Departamento>
-                       <a:Distrito>Ventanilla</a:Distrito>
-                       <a:Fax>cFAx 158976546464</a:Fax>
-                       <a:NombreComercial>TCI</a:NombreComercial>
-                       <a:Provincia>Limaa</a:Provincia>
-                       <a:RazonSocial>TCI</a:RazonSocial>
-                       <a:Ruc>20100392403</a:Ruc>
-                       <a:Telefono>577-1111 Fax Nro 099</a:Telefono>
-                       <a:Urbanizacion>Corpac</a:Urbanizacion>
-                       <a:Web>http://www.tci.net.pe/</a:Web>
+                        <a:Calle>'.$cabecera["DIRECCION_EMPRESA"].'</a:Calle>
+                        <a:CodDistrito>'.$cabecera["CODIGO_UBIGEO_EMPRESA"].'</a:CodDistrito>
+                        <a:CodPais>'.$cabecera["CODIGO_PAIS_EMPRESA"].'</a:CodPais>
+                        <a:CodigoEstablecimientoSUNAT>0000</a:CodigoEstablecimientoSUNAT>
+                        <a:CodigoTipoDocumento>'.$cabecera["TIPO_DOCUMENTO_EMPRESA"].'</a:CodigoTipoDocumento>
+                        <a:Correo>prueba@aldesa.com.pe</a:Correo>
+                        <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
+                        <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
+                        <a:NombreComercial>'.$cabecera["NOMBRE_COMERCIAL_EMPRESA"].'</a:NombreComercial>
+                        <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
+                        <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_EMPRESA"].'</a:RazonSocial>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Telefono>322-5555</a:Telefono>
+                        <a:Web>www.aldesaprueba.com.pe</a:Web>
                     </a:oENEmpresa>
-                 </oGeneral>
-                 <oTipoComprobante>Factura</oTipoComprobante>
-                 <TipoCodigo>1</TipoCodigo>
-                 <IdComprobanteCliente>0</IdComprobanteCliente>
-                 <Otorgar>1</Otorgar>
-              </Registrar>
-           </s:Body>
+                </oGeneral>
+                <oTipoComprobante>Factura</oTipoComprobante>
+                <TipoCodigo>0</TipoCodigo>
+                <Otorgar>1</Otorgar>
+            </Registrar>
+        </s:Body>
         </s:Envelope>';
-        $doc->loadXML($xmlCPE2);
+        $doc->loadXML($xmlCPE);
         $doc->save($ruta . '.xml');
         $resp['respuesta'] = 'ok';
         $resp['url_xml'] = $ruta . '.xml';
@@ -611,131 +320,184 @@ class Apisunat {
         $doc->preserveWhiteSpace = TRUE;
         //$doc->encoding = 'ISO-8859-1';
 		$doc->encoding = 'utf-8';
-		$xmlCPE = '<?xml version="1.0" encoding="UTF-8"?>
-                <DebitNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:DebitNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                    <ext:UBLExtensions>
-                        <ext:UBLExtension>
-                            <ext:ExtensionContent>
-                            </ext:ExtensionContent>
-                        </ext:UBLExtension>
-                    </ext:UBLExtensions>
-                    <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
-                    <cbc:CustomizationID>2.0</cbc:CustomizationID>
-                    <cbc:ID>'.$cabecera["NRO_COMPROBANTE"].'</cbc:ID>
-                    <cbc:IssueDate>'.$cabecera["FECHA_DOCUMENTO"].'</cbc:IssueDate>
-                    <cbc:IssueTime>00:00:00</cbc:IssueTime>
-                    <cbc:DocumentCurrencyCode>'.$cabecera["COD_MONEDA"].'</cbc:DocumentCurrencyCode>
-                    <cac:DiscrepancyResponse>
-                        <cbc:ReferenceID>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</cbc:ReferenceID>
-                        <cbc:ResponseCode>'.$cabecera["COD_TIPO_MOTIVO"].'</cbc:ResponseCode>
-                        <cbc:Description><![CDATA['.$cabecera["DESCRIPCION_MOTIVO"].']]></cbc:Description>
-                    </cac:DiscrepancyResponse>
-                    <cac:BillingReference>
-                        <cac:InvoiceDocumentReference>
-                            <cbc:ID>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</cbc:ID>
-                            <cbc:DocumentTypeCode>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</cbc:DocumentTypeCode>
-                        </cac:InvoiceDocumentReference>
-                    </cac:BillingReference>
-                    <cac:Signature>
-                        <cbc:ID>IDSignST</cbc:ID>
-                        <cac:SignatoryParty>
-                            <cac:PartyIdentification>
-                                <cbc:ID>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</cbc:ID>
-                            </cac:PartyIdentification>
-                            <cac:PartyName>
-                                <cbc:Name><![CDATA['.$cabecera["RAZON_SOCIAL_EMPRESA"].']]></cbc:Name>
-                            </cac:PartyName>
-                        </cac:SignatoryParty>
-                        <cac:DigitalSignatureAttachment>
-                            <cac:ExternalReference>
-                                <cbc:URI>#SignatureSP</cbc:URI>
-                            </cac:ExternalReference>
-                        </cac:DigitalSignatureAttachment>
-                    </cac:Signature>
-                    <cac:AccountingSupplierParty>
-                        <cac:Party>
-                            <cac:PartyIdentification>
-                                <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_EMPRESA"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</cbc:ID>
-                            </cac:PartyIdentification>
-                            <cac:PartyName>
-                                <cbc:Name><![CDATA[' . $cabecera["NOMBRE_COMERCIAL_EMPRESA"] . ']]></cbc:Name>
-                            </cac:PartyName>
-                            <cac:PartyLegalEntity>
-                                <cbc:RegistrationName><![CDATA['.$cabecera["RAZON_SOCIAL_EMPRESA"].']]></cbc:RegistrationName>
-                                <cac:RegistrationAddress>
-                                    <cbc:AddressTypeCode>0001</cbc:AddressTypeCode>
-                                </cac:RegistrationAddress>
-                            </cac:PartyLegalEntity>
-                        </cac:Party>
-                    </cac:AccountingSupplierParty>
-                    <cac:AccountingCustomerParty>
-                        <cac:Party>
-                            <cac:PartyIdentification>
-                                <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_CLIENTE"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</cbc:ID>
-                            </cac:PartyIdentification>
-                            <cac:PartyLegalEntity>
-                <cbc:RegistrationName><![CDATA['.$cabecera["RAZON_SOCIAL_CLIENTE"].']]></cbc:RegistrationName>
-                            </cac:PartyLegalEntity>
-                        </cac:Party>
-                    </cac:AccountingCustomerParty>
-                    <cac:TaxTotal>
-                        <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL_IGV"].'</cbc:TaxAmount>
-                        <cac:TaxSubtotal>
-                <cbc:TaxableAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL_GRAVADAS"].'</cbc:TaxableAmount>
-                            <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL_IGV"].'</cbc:TaxAmount>
-                            <cac:TaxCategory>
-                                <cac:TaxScheme>
-                                    <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">1000</cbc:ID>
-                                    <cbc:Name>IGV</cbc:Name>
-                                    <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                                </cac:TaxScheme>
-                            </cac:TaxCategory>
-                        </cac:TaxSubtotal>
-                    </cac:TaxTotal>
-                    <cac:RequestedMonetaryTotal>
-                <cbc:PayableAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL"].'</cbc:PayableAmount>
-            </cac:RequestedMonetaryTotal>';
-        for ($i = 0; $i < count($detalle); $i++) {
-                $xmlCPE = $xmlCPE . '
-            <cac:DebitNoteLine>
-                <cbc:ID>'.$detalle[$i]["txtITEM"].'</cbc:ID>
-                <cbc:DebitedQuantity unitCode="' . $detalle[$i]["txtUNIDAD_MEDIDA_DET"] . '">'.$detalle[$i]["txtCANTIDAD_DET"].'</cbc:DebitedQuantity>
-                <cbc:LineExtensionAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIMPORTE_DET"].'</cbc:LineExtensionAmount>
-                        <cac:PricingReference>
-                            <cac:AlternativeConditionPrice>
-                <cbc:PriceAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtPRECIO_DET"].'</cbc:PriceAmount>
-                <cbc:PriceTypeCode>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</cbc:PriceTypeCode>
-                            </cac:AlternativeConditionPrice>
-                        </cac:PricingReference>
-                        <cac:TaxTotal>		
-                <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIGV"].'</cbc:TaxAmount>
-                            <cac:TaxSubtotal>
-                                <cbc:TaxableAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIMPORTE_DET"].'</cbc:TaxableAmount>
-                                <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIGV"].'</cbc:TaxAmount>
-                                <cac:TaxCategory>
-                                    <cbc:Percent>'.$cabecera["POR_IGV"].'</cbc:Percent>
-                <cbc:TaxExemptionReasonCode>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</cbc:TaxExemptionReasonCode>
-                                    <cac:TaxScheme>
-                                        <cbc:ID>1000</cbc:ID>
-                                        <cbc:Name>IGV</cbc:Name>
-                                        <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                                    </cac:TaxScheme>
-                                </cac:TaxCategory>
-                            </cac:TaxSubtotal>
-                        </cac:TaxTotal>
-                        
-                <cac:Item>
-                <cbc:Description><![CDATA[' . $validacion->replace_invalid_caracters((isset($detalle[$i]["txtDESCRIPCION_DET"]))?$detalle[$i]["txtDESCRIPCION_DET"]:"") . ']]></cbc:Description>
-                            <cac:SellersItemIdentification>
-                                <cbc:ID><![CDATA[' . $validacion->replace_invalid_caracters((isset($detalle[$i]["txtCODIGO_DET"]))?$detalle[$i]["txtCODIGO_DET"]:"") . ']]></cbc:ID>
-                            </cac:SellersItemIdentification>
-                        </cac:Item>
-                <cac:Price>
-                <cbc:PriceAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtPRECIO_DET"].'</cbc:PriceAmount>
-                </cac:Price>
-            </cac:DebitNoteLine>';
-        }
-        $xmlCPE = $xmlCPE . '</DebitNote>';
+		$xmlCPE = '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+        <s:Body>
+            <Registrar xmlns="http://tempuri.org/">
+                <oGeneral xmlns:a="http://schemas.datacontract.org/2004/07/Libreria.XML.Facturacion" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                    <a:Autenticacion>
+                        <a:Clave>'.$cabecera["EMISOR_PASS_SOL"].'</a:Clave>
+                        <a:Ruc>'.$cabecera["EMISOR_RUC"].'</a:Ruc>
+                    </a:Autenticacion>
+                    <a:oENComprobante>
+                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>';
+                        for ($i = 0; $i < count($detalle); $i++) {
+                            $xmlCPE = $xmlCPE .'<a:ComprobanteDetalle>
+                            <a:ENComprobanteDetalle>
+                                <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
+                                <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
+                                <a:CodigoTipoPrecio>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</a:CodigoTipoPrecio>
+                                <a:ComprobanteDetalleImpuestos>
+                                    <a:ENComprobanteDetalleImpuestos>
+                                        <a:AfectacionIGV>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</a:AfectacionIGV>
+                                        <a:CodigoTributo>1000</a:CodigoTributo>
+                                        <a:CodigoUN>VAT</a:CodigoUN>
+                                        <a:DesTributo>IGV</a:DesTributo>
+                                        <a:ImporteExplicito>'.$detalle[$i]["txtIGV"].'</a:ImporteExplicito>
+                                        <a:ImporteTributo>'.$detalle[$i]["txtIGV"].'</a:ImporteTributo>
+                                        <a:MontoBase>'.$detalle[$i]["txtIMPORTE_DET"].'</a:MontoBase>
+                                        <a:TasaAplicada>18</a:TasaAplicada>
+                                    </a:ENComprobanteDetalleImpuestos>
+                                </a:ComprobanteDetalleImpuestos>
+                                <a:Descripcion>'.$detalle[$i]["txtDESCRIPCION_DET"].'</a:Descripcion>
+                                <a:Determinante>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Determinante>
+                                <a:ImpuestoTotal>'.$detalle[$i]["txtIGV"].'</a:ImpuestoTotal>
+                                <a:Item>' . $detalle[$i]["txtITEM"] . '</a:Item>
+                                <a:PrecioVentaItem>'.$detalle[$i]["txtPRECIO_DET"].'</a:PrecioVentaItem>
+                                <a:Total>'.$detalle[$i]["txtSUB_TOTAL_DET"].'</a:Total>
+                                <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
+                                <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
+                                <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
+                            </a:ENComprobanteDetalle>
+                        </a:ComprobanteDetalle>';
+                    }
+                        $xmlCPE = $xmlCPE .'<a:ComprobanteGrillaCuenta>
+                            <a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>BCP SOLES</a:Descripcion>
+                                <a:Valor1>SOLES</a:Valor1>
+                                <a:Valor2>194-1333331-0-30</a:Valor2>
+                                <a:Valor3>002-194-006666661030-93</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>
+                            <a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>BCP DOLAR</a:Descripcion>
+                                <a:Valor1>DÓLARES AMERICANOS</a:Valor1>
+                                <a:Valor2>194-1444417-1-20</a:Valor2>
+                                <a:Valor3>002-194-001643555555-95</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>
+                        </a:ComprobanteGrillaCuenta>
+                    <a:ComprobanteMotivosDocumentos>
+                       <a:ENComprobanteMotivoDocumento>
+                          <a:CodigoMotivoEmision>'.$cabecera["COD_TIPO_MOTIVO"].'</a:CodigoMotivoEmision>
+                          <a:NumeroDocRef>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:NumeroDocRef>
+                          <a:SerieDocRef>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:SerieDocRef>
+                         <a:Sustentos>
+                            <a:ENComprobanteMotivoDocumentoSustento>
+                              <a:Sustento>'.$cabecera["DESCRIPCION_MOTIVO"].'</a:Sustento>
+                            </a:ENComprobanteMotivoDocumentoSustento>
+                         </a:Sustentos>
+                      </a:ENComprobanteMotivoDocumento>                                         
+                    </a:ComprobanteMotivosDocumentos>               
+                    <a:ComprobanteNotaCreditoDocRef>
+                       <a:ENComprobanteNotaDocRef>
+                          <a:FechaDocRef>'.$cabecera["FECHA_COMPROBANTE_MODIFICA"].'</a:FechaDocRef>
+                          <a:Numero>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:Numero>
+                          <a:Serie>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:Serie>
+                          <a:TipoComprobante>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</a:TipoComprobante>
+                       </a:ENComprobanteNotaDocRef>
+                    </a:ComprobanteNotaCreditoDocRef>               
+                        <a:ComprobantePropiedadesAdicionales>
+                            <a:ENComprobantePropiedadesAdicionales>
+                                <a:Codigo>1000</a:Codigo>
+                                <a:Valor>'.$cabecera["TOTAL_LETRAS"].'</a:Valor>
+                            </a:ENComprobantePropiedadesAdicionales>
+                        </a:ComprobantePropiedadesAdicionales>
+                        <a:FechaEmision>'.$cabecera["FECHA_DOCUMENTO"].'</a:FechaEmision>
+                        <a:FormaPago>
+                            <a:ENFormaPago>
+                                <a:CodigoFormaPago>001</a:CodigoFormaPago>
+                                <a:DiasVencimiento>30</a:DiasVencimiento>
+                                <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
+                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
+                            </a:ENFormaPago>
+                        </a:FormaPago>
+                        <a:FormaPagoSunat>
+                            <a:TipoFormaPago>1</a:TipoFormaPago>
+                        </a:FormaPagoSunat>
+                        <a:HoraEmision>12:00:00</a:HoraEmision>
+                        <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
+                        <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
+                        <a:MontosTotales>
+                            <a:Gravado>
+                                <a:GravadoIGV>
+                                    <a:Base>'.$cabecera["SUB_TOTAL"].'</a:Base>
+                                    <a:Porcentaje>'.$cabecera["POR_IGV"].'</a:Porcentaje>
+                                    <a:ValorImpuesto>'.$cabecera["TOTAL_IGV"].'</a:ValorImpuesto>
+                                </a:GravadoIGV>
+                            <a:Total>'.$cabecera["SUB_TOTAL"].'</a:Total>
+                            </a:Gravado>
+                        </a:MontosTotales>  
+                        <a:NrodePedido>'.$cabecera["NRO_GUIA_REMISION"].'</a:NrodePedido>                           
+                        <a:Numero>'.$cabecera["NRO_COMPROBANTE"].'</a:Numero>               
+                        <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_CLIENTE"].'</a:RazonSocial>
+                        <a:Receptor>
+                            <a:ENReceptor>
+                                <a:Calle>'.$cabecera["DIRECCION_CLIENTE"].'</a:Calle>
+                                <a:Codigo>'.$cabecera["COD_UBIGEO_CLIENTE"].'</a:Codigo>
+                                <a:CodPais>'.$cabecera["COD_PAIS_CLIENTE"].'</a:CodPais>
+                                <a:Departamento>'.$cabecera["DEPARTAMENTO_CLIENTE"].'</a:Departamento>
+                                <a:Distrito>'.$cabecera["DISTRITO_CLIENTE"].'</a:Distrito>
+                                <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
+                            </a:ENReceptor>
+                        </a:Receptor>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
+                        <a:Sucursal>
+                            <a:ENSucursal>
+                                <a:Direccion>'.$cabecera["DIRECCION_EMPRESA"].'</a:Direccion>
+                                <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
+                                <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
+                                <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
+                            </a:ENSucursal>
+                        </a:Sucursal>
+                        <a:Texto>
+                            <a:ENTexto>
+                                <a:Texto1>TEXTO EN ENCABEZADO Texto 1</a:Texto1>
+                                <a:Texto10>Texto 10</a:Texto10>               
+                                <a:Texto11>Texto 11</a:Texto11>                     
+                                <a:Texto12>Twxto 12</a:Texto12>                     
+                                <a:Texto13>Texto 13</a:Texto13>                     
+                                <a:Texto14>Texto 14</a:Texto14> 
+                                <a:Texto2>REFERENCIA Texto 2</a:Texto2>                     
+                                <a:Texto3>2021013 Texto 3</a:Texto3>                     
+                                <a:Texto4>DEL Texto 4</a:Texto4>                     
+                                <a:Texto5>AL Texto 5</a:Texto5>                     
+                                <a:Texto6>DIAS Texto 6</a:Texto6>                     
+                                <a:Texto7>Cant Texto 7</a:Texto7>                     
+                                <a:Texto8>Bultos Texto 8</a:Texto8>                     
+                                <a:Texto9>Valor Texto 9</a:Texto9>                  
+                            </a:ENTexto>
+                        </a:Texto>
+                        <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
+                        <a:TipoDocumentoIdentidad>'.$cabecera["TIPO_DOCUMENTO_CLIENTE"].'</a:TipoDocumentoIdentidad>
+                        <a:TipoOperacion>'.$cabecera["TIPO_OPERACION"].'</a:TipoOperacion>
+                        <a:TipoPlantilla>ST1</a:TipoPlantilla>
+                        <a:TotalImpuesto>'.$cabecera["TOTAL_IGV"].'</a:TotalImpuesto>
+                        <a:TotalPrecioVenta>'.$cabecera["TOTAL"].'</a:TotalPrecioVenta>
+                        <a:TotalValorVenta>'.$cabecera["TOTAL_GRAVADAS"].'</a:TotalValorVenta>
+                        <a:VersionUbl>2.1</a:VersionUbl>
+                    </a:oENComprobante>
+                    <a:oENEmpresa>
+                        <a:Calle>'.$cabecera["DIRECCION_EMPRESA"].'</a:Calle>
+                        <a:CodDistrito>'.$cabecera["CODIGO_UBIGEO_EMPRESA"].'</a:CodDistrito>
+                        <a:CodPais>'.$cabecera["CODIGO_PAIS_EMPRESA"].'</a:CodPais>
+                        <a:CodigoEstablecimientoSUNAT>0000</a:CodigoEstablecimientoSUNAT>
+                        <a:CodigoTipoDocumento>'.$cabecera["TIPO_DOCUMENTO_EMPRESA"].'</a:CodigoTipoDocumento>
+                        <a:Correo>prueba@aldesa.com.pe</a:Correo>
+                        <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
+                        <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
+                        <a:NombreComercial>'.$cabecera["NOMBRE_COMERCIAL_EMPRESA"].'</a:NombreComercial>
+                        <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
+                        <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_EMPRESA"].'</a:RazonSocial>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Telefono>322-5555</a:Telefono>
+                        <a:Web>www.aldesaprueba.com.pe</a:Web>
+                    </a:oENEmpresa>
+                </oGeneral>
+                <oTipoComprobante>NotaDebito</oTipoComprobante>
+                <TipoCodigo>0</TipoCodigo>
+                <Otorgar>1</Otorgar>
+           </Registrar>
+        </s:Body>
+     </s:Envelope>';
         $doc->loadXML($xmlCPE);
         $doc->save($ruta . '.xml');
         $resp['respuesta'] = 'ok';

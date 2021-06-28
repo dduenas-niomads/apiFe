@@ -86,11 +86,14 @@
 	        'TOTAL' => (isset($data['total'])) ? $data['total'] : "0",
 	        //==============================================
 	        'TIPO_COMPROBANTE_MODIFICA' => $data['tipo_comprobante_modifica'],
+	        'FECHA_COMPROBANTE_MODIFICA' => $data['fecha_comprobante_modifica'],
 	        'NRO_DOCUMENTO_MODIFICA' => $data['nro_documento_modifica'],
+	        'SERIE_DOCUMENTO_MODIFICA' => $data['serie_documento_modifica'],
 	        'COD_TIPO_MOTIVO' => $data['cod_tipo_motivo'],
 	        'DESCRIPCION_MOTIVO' => $data['descripcion_motivo'],
 	        //===============================================
-	        'NRO_COMPROBANTE' => $data['serie_comprobante'].'-'.$data['numero_comprobante'],
+	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
+	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
 			'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
 	        'COD_MONEDA' => $data['cod_moneda'],

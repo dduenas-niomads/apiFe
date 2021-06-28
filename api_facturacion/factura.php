@@ -113,7 +113,8 @@
 	        'NRO_OTR_COMPROBANTE' => (isset($data['nro_otr_comprobante'])) ? $data['nro_otr_comprobante'] : "",
 			//===============================================
 
-	        'NRO_COMPROBANTE' => $data['serie_comprobante'].'-'.$data['numero_comprobante'],
+	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
+	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
 			'FECHA_VTO' => $data['fecha_vto_comprobante'], //pag. 31 //fecha de vencimiento
 	        'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
