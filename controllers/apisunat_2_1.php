@@ -181,131 +181,184 @@ class Apisunat {
         //$doc->encoding = 'ISO-8859-1';
         $doc->encoding = 'utf-8';
         
-        $xmlCPE = '<?xml version="1.0" encoding="UTF-8"?>
-            <CreditNote xmlns="urn:oasis:names:specification:ubl:schema:xsd:CreditNote-2" xmlns:cac="urn:oasis:names:specification:ubl:schema:xsd:CommonAggregateComponents-2" xmlns:cbc="urn:oasis:names:specification:ubl:schema:xsd:CommonBasicComponents-2" xmlns:ccts="urn:un:unece:uncefact:documentation:2" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:ext="urn:oasis:names:specification:ubl:schema:xsd:CommonExtensionComponents-2" xmlns:qdt="urn:oasis:names:specification:ubl:schema:xsd:QualifiedDatatypes-2" xmlns:sac="urn:sunat:names:specification:ubl:peru:schema:xsd:SunatAggregateComponents-1" xmlns:udt="urn:un:unece:uncefact:data:specification:UnqualifiedDataTypesSchemaModule:2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-                <ext:UBLExtensions>
-                    <ext:UBLExtension>
-                        <ext:ExtensionContent>
-                        </ext:ExtensionContent>
-                    </ext:UBLExtension>
-                </ext:UBLExtensions>
-                <cbc:UBLVersionID>2.1</cbc:UBLVersionID>
-                <cbc:CustomizationID>2.0</cbc:CustomizationID>
-                <cbc:ID>'.$cabecera["NRO_COMPROBANTE"].'</cbc:ID>
-                <cbc:IssueDate>'.$cabecera["FECHA_DOCUMENTO"].'</cbc:IssueDate>
-                <cbc:IssueTime>00:00:00</cbc:IssueTime>
-                <cbc:DocumentCurrencyCode>'.$cabecera["COD_MONEDA"].'</cbc:DocumentCurrencyCode>
-                <cac:DiscrepancyResponse>
-                    <cbc:ReferenceID>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</cbc:ReferenceID>
-                    <cbc:ResponseCode>'.$cabecera["COD_TIPO_MOTIVO"].'</cbc:ResponseCode>
-                    <cbc:Description><![CDATA['.$cabecera["DESCRIPCION_MOTIVO"].']]></cbc:Description>
-                </cac:DiscrepancyResponse>
-                <cac:BillingReference>
-                    <cac:InvoiceDocumentReference>
-                        <cbc:ID>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</cbc:ID>
-                        <cbc:DocumentTypeCode>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</cbc:DocumentTypeCode>
-                    </cac:InvoiceDocumentReference>
-                </cac:BillingReference>
-                <cac:Signature>
-                    <cbc:ID>IDSignST</cbc:ID>
-                    <cac:SignatoryParty>
-                        <cac:PartyIdentification>
-                            <cbc:ID>' . $cabecera["NRO_DOCUMENTO_EMPRESA"] . '</cbc:ID>
-                        </cac:PartyIdentification>
-                        <cac:PartyName>
-                            <cbc:Name><![CDATA[' . $cabecera["RAZON_SOCIAL_EMPRESA"] . ']]></cbc:Name>
-                        </cac:PartyName>
-                    </cac:SignatoryParty>
-                    <cac:DigitalSignatureAttachment>
-                        <cac:ExternalReference>
-                            <cbc:URI>#SignatureSP</cbc:URI>
-                        </cac:ExternalReference>
-                    </cac:DigitalSignatureAttachment>
-                </cac:Signature>
-                <cac:AccountingSupplierParty>
-                    <cac:Party>
-                        <cac:PartyIdentification>
-                            <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_EMPRESA"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</cbc:ID>
-                        </cac:PartyIdentification>
-                        <cac:PartyName>
-                            <cbc:Name><![CDATA[' . $cabecera["NOMBRE_COMERCIAL_EMPRESA"] . ']]></cbc:Name>
-                        </cac:PartyName>
-                        <cac:PartyLegalEntity>
-            <cbc:RegistrationName><![CDATA['.$cabecera["RAZON_SOCIAL_EMPRESA"].']]></cbc:RegistrationName>
-                            <cac:RegistrationAddress>
-                                <cbc:AddressTypeCode>0001</cbc:AddressTypeCode>
-                            </cac:RegistrationAddress>
-                        </cac:PartyLegalEntity>
-                    </cac:Party>
-                </cac:AccountingSupplierParty>
-                <cac:AccountingCustomerParty>
-                    <cac:Party>
-                        <cac:PartyIdentification>
-                            <cbc:ID schemeID="' . $cabecera["TIPO_DOCUMENTO_CLIENTE"] . '" schemeName="SUNAT:Identificador de Documento de Identidad" schemeAgencyName="PE:SUNAT" schemeURI="urn:pe:gob:sunat:cpe:see:gem:catalogos:catalogo06">' . $cabecera["NRO_DOCUMENTO_CLIENTE"] . '</cbc:ID>
-                        </cac:PartyIdentification>
-                        <cac:PartyLegalEntity>
-            <cbc:RegistrationName><![CDATA[' . $cabecera["RAZON_SOCIAL_CLIENTE"] . ']]></cbc:RegistrationName>
-                        </cac:PartyLegalEntity>
-                    </cac:Party>
-                </cac:AccountingCustomerParty>
-                <cac:TaxTotal>
-                    <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL_IGV"].'</cbc:TaxAmount>
-                    <cac:TaxSubtotal>
-            <cbc:TaxableAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL_GRAVADAS"].'</cbc:TaxableAmount>
-            <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL_IGV"].'</cbc:TaxAmount>
-            <cac:TaxCategory>
-                <cac:TaxScheme>
-                    <cbc:ID schemeID="UN/ECE 5153" schemeAgencyID="6">1000</cbc:ID>
-                    <cbc:Name>IGV</cbc:Name>
-                    <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                </cac:TaxScheme>
-            </cac:TaxCategory>
-            </cac:TaxSubtotal>
-            </cac:TaxTotal>
-            <cac:LegalMonetaryTotal>
-                <cbc:PayableAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$cabecera["TOTAL"].'</cbc:PayableAmount>
-            </cac:LegalMonetaryTotal>';
-
-        for ($i = 0; $i < count($detalle); $i++) {
-            $xmlCPE = $xmlCPE .'<cac:CreditNoteLine>
-                    <cbc:ID>'.$detalle[$i]["txtITEM"].'</cbc:ID>
-            <cbc:CreditedQuantity unitCode="' . $detalle[$i]["txtUNIDAD_MEDIDA_DET"] . '">' . $detalle[$i]["txtCANTIDAD_DET"] . '</cbc:CreditedQuantity>
-            <cbc:LineExtensionAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIMPORTE_DET"].'</cbc:LineExtensionAmount>
-                    <cac:PricingReference>
-                        <cac:AlternativeConditionPrice>
-            <cbc:PriceAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtPRECIO_DET"].'</cbc:PriceAmount>
-                            <cbc:PriceTypeCode>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</cbc:PriceTypeCode>
-                        </cac:AlternativeConditionPrice>
-                    </cac:PricingReference>
-                    <cac:TaxTotal>
-            <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIGV"].'</cbc:TaxAmount>
-                        <cac:TaxSubtotal>
-            <cbc:TaxableAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIMPORTE_DET"].'</cbc:TaxableAmount>
-            <cbc:TaxAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtIGV"].'</cbc:TaxAmount>
-                            <cac:TaxCategory>
-                                <cbc:Percent>'.$cabecera["POR_IGV"].'</cbc:Percent>
-            <cbc:TaxExemptionReasonCode>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</cbc:TaxExemptionReasonCode>
-                                <cac:TaxScheme>
-                                    <cbc:ID>1000</cbc:ID>
-                                    <cbc:Name>IGV</cbc:Name>
-                                    <cbc:TaxTypeCode>VAT</cbc:TaxTypeCode>
-                                </cac:TaxScheme>
-                            </cac:TaxCategory>
-                        </cac:TaxSubtotal>
-                    </cac:TaxTotal>
-                    <cac:Item>
-            <cbc:Description><![CDATA[' . $validacion->replace_invalid_caracters((isset($detalle[$i]["txtDESCRIPCION_DET"]))?$detalle[$i]["txtDESCRIPCION_DET"]:"") . ']]></cbc:Description>
-                        <cac:SellersItemIdentification>
-                            <cbc:ID><![CDATA[' . $validacion->replace_invalid_caracters((isset($detalle[$i]["txtCODIGO_DET"]))?$detalle[$i]["txtCODIGO_DET"]:"") . ']]></cbc:ID>
-                        </cac:SellersItemIdentification>
-                    </cac:Item>
-                    <cac:Price>
-            <cbc:PriceAmount currencyID="'.$cabecera["COD_MONEDA"].'">'.$detalle[$i]["txtPRECIO_DET"].'</cbc:PriceAmount>
-                </cac:Price>
-            </cac:CreditNoteLine>';
-        }
-
-        $xmlCPE = $xmlCPE . '</CreditNote>';
+		$xmlCPE = '<s:Envelope xmlns:s="http://schemas.xmlsoap.org/soap/envelope/">
+        <s:Body>
+            <Registrar xmlns="http://tempuri.org/">
+                <oGeneral xmlns:a="http://schemas.datacontract.org/2004/07/Libreria.XML.Facturacion" xmlns:i="http://www.w3.org/2001/XMLSchema-instance">
+                    <a:Autenticacion>
+                        <a:Clave>'.$cabecera["EMISOR_PASS_SOL"].'</a:Clave>
+                        <a:Ruc>'.$cabecera["EMISOR_RUC"].'</a:Ruc>
+                    </a:Autenticacion>
+                    <a:oENComprobante>
+                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>';
+                        for ($i = 0; $i < count($detalle); $i++) {
+                            $xmlCPE = $xmlCPE .'<a:ComprobanteDetalle>
+                            <a:ENComprobanteDetalle>
+                                <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
+                                <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
+                                <a:CodigoTipoPrecio>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</a:CodigoTipoPrecio>
+                                <a:ComprobanteDetalleImpuestos>
+                                    <a:ENComprobanteDetalleImpuestos>
+                                        <a:AfectacionIGV>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</a:AfectacionIGV>
+                                        <a:CodigoTributo>1000</a:CodigoTributo>
+                                        <a:CodigoUN>VAT</a:CodigoUN>
+                                        <a:DesTributo>IGV</a:DesTributo>
+                                        <a:ImporteExplicito>'.$detalle[$i]["txtIGV"].'</a:ImporteExplicito>
+                                        <a:ImporteTributo>'.$detalle[$i]["txtIGV"].'</a:ImporteTributo>
+                                        <a:MontoBase>'.$detalle[$i]["txtIMPORTE_DET"].'</a:MontoBase>
+                                        <a:TasaAplicada>18</a:TasaAplicada>
+                                    </a:ENComprobanteDetalleImpuestos>
+                                </a:ComprobanteDetalleImpuestos>
+                                <a:Descripcion>'.$detalle[$i]["txtDESCRIPCION_DET"].'</a:Descripcion>
+                                <a:Determinante>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Determinante>
+                                <a:ImpuestoTotal>'.$detalle[$i]["txtIGV"].'</a:ImpuestoTotal>
+                                <a:Item>' . $detalle[$i]["txtITEM"] . '</a:Item>
+                                <a:PrecioVentaItem>'.$detalle[$i]["txtPRECIO_DET"].'</a:PrecioVentaItem>
+                                <a:Total>'.$detalle[$i]["txtSUB_TOTAL_DET"].'</a:Total>
+                                <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
+                                <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
+                                <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
+                            </a:ENComprobanteDetalle>
+                        </a:ComprobanteDetalle>';
+                    }
+                        $xmlCPE = $xmlCPE .'<a:ComprobanteGrillaCuenta>
+                            <a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>BCP SOLES</a:Descripcion>
+                                <a:Valor1>SOLES</a:Valor1>
+                                <a:Valor2>194-1333331-0-30</a:Valor2>
+                                <a:Valor3>002-194-006666661030-93</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>
+                            <a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>BCP DOLAR</a:Descripcion>
+                                <a:Valor1>DÓLARES AMERICANOS</a:Valor1>
+                                <a:Valor2>194-1444417-1-20</a:Valor2>
+                                <a:Valor3>002-194-001643555555-95</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>
+                        </a:ComprobanteGrillaCuenta>
+                    <a:ComprobanteMotivosDocumentos>
+                       <a:ENComprobanteMotivoDocumento>
+                          <a:CodigoMotivoEmision>'.$cabecera["COD_TIPO_MOTIVO"].'</a:CodigoMotivoEmision>
+                          <a:NumeroDocRef>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:NumeroDocRef>
+                          <a:SerieDocRef>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:SerieDocRef>
+                         <a:Sustentos>
+                            <a:ENComprobanteMotivoDocumentoSustento>
+                              <a:Sustento>'.$cabecera["DESCRIPCION_MOTIVO"].'</a:Sustento>
+                            </a:ENComprobanteMotivoDocumentoSustento>
+                         </a:Sustentos>
+                      </a:ENComprobanteMotivoDocumento>                                         
+                    </a:ComprobanteMotivosDocumentos>               
+                    <a:ComprobanteNotaCreditoDocRef>
+                       <a:ENComprobanteNotaDocRef>
+                          <a:FechaDocRef>'.$cabecera["FECHA_COMPROBANTE_MODIFICA"].'</a:FechaDocRef>
+                          <a:Numero>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:Numero>
+                          <a:Serie>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:Serie>
+                          <a:TipoComprobante>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</a:TipoComprobante>
+                       </a:ENComprobanteNotaDocRef>
+                    </a:ComprobanteNotaCreditoDocRef>               
+                        <a:ComprobantePropiedadesAdicionales>
+                            <a:ENComprobantePropiedadesAdicionales>
+                                <a:Codigo>1000</a:Codigo>
+                                <a:Valor>'.$cabecera["TOTAL_LETRAS"].'</a:Valor>
+                            </a:ENComprobantePropiedadesAdicionales>
+                        </a:ComprobantePropiedadesAdicionales>
+                        <a:FechaEmision>'.$cabecera["FECHA_DOCUMENTO"].'</a:FechaEmision>
+                        <a:FormaPago>
+                            <a:ENFormaPago>
+                                <a:CodigoFormaPago>001</a:CodigoFormaPago>
+                                <a:DiasVencimiento>30</a:DiasVencimiento>
+                                <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
+                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
+                            </a:ENFormaPago>
+                        </a:FormaPago>
+                        <a:FormaPagoSunat>
+                            <a:TipoFormaPago>1</a:TipoFormaPago>
+                        </a:FormaPagoSunat>
+                        <a:HoraEmision>12:00:00</a:HoraEmision>
+                        <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
+                        <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
+                        <a:MontosTotales>
+                            <a:Gravado>
+                                <a:GravadoIGV>
+                                    <a:Base>'.$cabecera["SUB_TOTAL"].'</a:Base>
+                                    <a:Porcentaje>'.$cabecera["POR_IGV"].'</a:Porcentaje>
+                                    <a:ValorImpuesto>'.$cabecera["TOTAL_IGV"].'</a:ValorImpuesto>
+                                </a:GravadoIGV>
+                            <a:Total>'.$cabecera["SUB_TOTAL"].'</a:Total>
+                            </a:Gravado>
+                        </a:MontosTotales>  
+                        <a:NrodePedido>'.$cabecera["NRO_GUIA_REMISION"].'</a:NrodePedido>                           
+                        <a:Numero>'.$cabecera["NRO_COMPROBANTE"].'</a:Numero>               
+                        <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_CLIENTE"].'</a:RazonSocial>
+                        <a:Receptor>
+                            <a:ENReceptor>
+                                <a:Calle>'.$cabecera["DIRECCION_CLIENTE"].'</a:Calle>
+                                <a:Codigo>'.$cabecera["COD_UBIGEO_CLIENTE"].'</a:Codigo>
+                                <a:CodPais>'.$cabecera["COD_PAIS_CLIENTE"].'</a:CodPais>
+                                <a:Departamento>'.$cabecera["DEPARTAMENTO_CLIENTE"].'</a:Departamento>
+                                <a:Distrito>'.$cabecera["DISTRITO_CLIENTE"].'</a:Distrito>
+                                <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
+                            </a:ENReceptor>
+                        </a:Receptor>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
+                        <a:Sucursal>
+                            <a:ENSucursal>
+                                <a:Direccion>'.$cabecera["DIRECCION_EMPRESA"].'</a:Direccion>
+                                <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
+                                <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
+                                <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
+                            </a:ENSucursal>
+                        </a:Sucursal>
+                        <a:Texto>
+                            <a:ENTexto>
+                                <a:Texto1>TEXTO EN ENCABEZADO Texto 1</a:Texto1>
+                                <a:Texto10>Texto 10</a:Texto10>               
+                                <a:Texto11>Texto 11</a:Texto11>                     
+                                <a:Texto12>Twxto 12</a:Texto12>                     
+                                <a:Texto13>Texto 13</a:Texto13>                     
+                                <a:Texto14>Texto 14</a:Texto14> 
+                                <a:Texto2>REFERENCIA Texto 2</a:Texto2>                     
+                                <a:Texto3>2021013 Texto 3</a:Texto3>                     
+                                <a:Texto4>DEL Texto 4</a:Texto4>                     
+                                <a:Texto5>AL Texto 5</a:Texto5>                     
+                                <a:Texto6>DIAS Texto 6</a:Texto6>                     
+                                <a:Texto7>Cant Texto 7</a:Texto7>                     
+                                <a:Texto8>Bultos Texto 8</a:Texto8>                     
+                                <a:Texto9>Valor Texto 9</a:Texto9>                  
+                            </a:ENTexto>
+                        </a:Texto>
+                        <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
+                        <a:TipoDocumentoIdentidad>'.$cabecera["TIPO_DOCUMENTO_CLIENTE"].'</a:TipoDocumentoIdentidad>
+                        <a:TipoOperacion>'.$cabecera["TIPO_OPERACION"].'</a:TipoOperacion>
+                        <a:TipoPlantilla>ST1</a:TipoPlantilla>
+                        <a:TotalImpuesto>'.$cabecera["TOTAL_IGV"].'</a:TotalImpuesto>
+                        <a:TotalPrecioVenta>'.$cabecera["TOTAL"].'</a:TotalPrecioVenta>
+                        <a:TotalValorVenta>'.$cabecera["TOTAL_GRAVADAS"].'</a:TotalValorVenta>
+                        <a:VersionUbl>2.1</a:VersionUbl>
+                    </a:oENComprobante>
+                    <a:oENEmpresa>
+                        <a:Calle>'.$cabecera["DIRECCION_EMPRESA"].'</a:Calle>
+                        <a:CodDistrito>'.$cabecera["CODIGO_UBIGEO_EMPRESA"].'</a:CodDistrito>
+                        <a:CodPais>'.$cabecera["CODIGO_PAIS_EMPRESA"].'</a:CodPais>
+                        <a:CodigoEstablecimientoSUNAT>0000</a:CodigoEstablecimientoSUNAT>
+                        <a:CodigoTipoDocumento>'.$cabecera["TIPO_DOCUMENTO_EMPRESA"].'</a:CodigoTipoDocumento>
+                        <a:Correo>prueba@aldesa.com.pe</a:Correo>
+                        <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
+                        <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
+                        <a:NombreComercial>'.$cabecera["NOMBRE_COMERCIAL_EMPRESA"].'</a:NombreComercial>
+                        <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
+                        <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_EMPRESA"].'</a:RazonSocial>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Telefono>322-5555</a:Telefono>
+                        <a:Web>www.aldesaprueba.com.pe</a:Web>
+                    </a:oENEmpresa>
+                </oGeneral>
+                <oTipoComprobante>NotaCredito</oTipoComprobante>
+                <TipoCodigo>0</TipoCodigo>
+                <Otorgar>1</Otorgar>
+           </Registrar>
+        </s:Body>
+     </s:Envelope>';
         $doc->loadXML($xmlCPE);
         $doc->save($ruta . '.xml');
         $resp['respuesta'] = 'ok';
