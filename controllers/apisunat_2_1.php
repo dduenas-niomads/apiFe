@@ -106,7 +106,7 @@ class Apisunat {
                                 <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
                             </a:ENReceptor>
                         </a:Receptor>
-                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:Ruc>
                         <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
                         <a:Sucursal>
                             <a:ENSucursal>
@@ -160,7 +160,7 @@ class Apisunat {
                         <a:Web>www.aldesaprueba.com.pe</a:Web>
                     </a:oENEmpresa>
                 </oGeneral>
-                <oTipoComprobante>Factura</oTipoComprobante>
+                <oTipoComprobante>'.$cabecera["TIPO_DOCUMENTO"].'</oTipoComprobante>
                 <TipoCodigo>0</TipoCodigo>
                 <Otorgar>1</Otorgar>
             </Registrar>

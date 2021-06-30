@@ -83,7 +83,9 @@
 			'TOTAL_GRAVADAS' => (isset($data['total_gravadas'])) ? $data['total_gravadas'] : "0",
 	        'POR_IGV' => (isset($data['porcentaje_igv'])) ? $data['porcentaje_igv'] : "0", //Porcentaje del impuesto
 	        'TOTAL_IGV' => (isset($data['total_igv'])) ? $data['total_igv'] : "0",
+			'SUB_TOTAL' => (isset($data['sub_total'])) ? $data['sub_total'] : "0",
 	        'TOTAL' => (isset($data['total'])) ? $data['total'] : "0",
+			'TOTAL_LETRAS' => $data['total_letras'],
 	        //==============================================
 	        'TIPO_COMPROBANTE_MODIFICA' => $data['tipo_comprobante_modifica'],
 	        'FECHA_COMPROBANTE_MODIFICA' => $data['fecha_comprobante_modifica'],
@@ -95,12 +97,24 @@
 	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
 	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
+			'FECHA_VTO' => $data['fecha_vto_comprobante'], //pag. 31 //fecha de vencimiento
 			'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
 	        'COD_MONEDA' => $data['cod_moneda'],
-	        //==================================================
+	        //==============================================
+	        'NRO_GUIA_REMISION' => (isset($data['nro_guia_remision'])) ? $data['nro_guia_remision'] : "",
+	        'COD_GUIA_REMISION' => (isset($data['cod_guia_remision'])) ? $data['cod_guia_remision'] : "",
+	        'NRO_OTR_COMPROBANTE' => (isset($data['nro_otr_comprobante'])) ? $data['nro_otr_comprobante'] : "",
+	        //======= DATOS DEL CLIENTE ===================================
 	        'NRO_DOCUMENTO_CLIENTE' => $data['cliente_numerodocumento'],
 			'RAZON_SOCIAL_CLIENTE' => $data['cliente_nombre'],
-			'TIPO_DOCUMENTO_CLIENTE' => $data['cliente_tipodocumento'],
+			'TIPO_DOCUMENTO_CLIENTE' => $data['cliente_tipodocumento'], //RUC
+			'DIRECCION_CLIENTE' => $data['cliente_direccion'],
+			'COD_PAIS_CLIENTE' => $data['cliente_pais'],
+			'COD_UBIGEO_CLIENTE' => (isset($data['cliente_codigoubigeo'])) ? $data['cliente_codigoubigeo'] : "",
+			'DEPARTAMENTO_CLIENTE' => (isset($data['cliente_departamento'])) ? $data['cliente_departamento'] : "",
+			'PROVINCIA_CLIENTE' => (isset($data['cliente_provincia'])) ? $data['cliente_provincia'] : "",
+			'DISTRITO_CLIENTE' => (isset($data['cliente_distrito'])) ? $data['cliente_distrito'] : "",
+			'CIUDAD_CLIENTE' => (isset($data['cliente_ciudad'])) ? $data['cliente_ciudad'] : "",
 	        //===============================================
 			'NRO_DOCUMENTO_EMPRESA' => $emisor['ruc'],
 			'TIPO_DOCUMENTO_EMPRESA' => $emisor['tipo_doc'], //RUC
