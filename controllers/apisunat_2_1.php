@@ -738,54 +738,19 @@ class Apisunat {
     }
 	
 	public function enviar_documento($ruc, $usuario_sol, $pass_sol, $ruta_archivo, $ruta_archivo_cdr, $archivo, $ruta_ws) {
-        //=================ZIPEAR ================
-        $zip = new ZipArchive();
-        $filenameXMLCPE = $ruta_archivo . '.zip';
-
-        if ($zip->open($filenameXMLCPE, ZIPARCHIVE::CREATE) === true) {
-            $zip->addFile($ruta_archivo . '.xml', $archivo . '.xml'); //ORIGEN, DESTINO
-            $zip->close();
-        }
-
         //===================ENVIO FACTURACION=====================
         $soapUrl = $ruta_ws;
         // xml post structure
-        $xml_post_string = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" 
-            xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ser="http://service.sunat.gob.pe" 
-            xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd">
-            <soapenv:Header>
-                <wsse:Security>
-                    <wsse:UsernameToken>
-                        <wsse:Username>' . $usuario_sol . '</wsse:Username>
-                        <wsse:Password>' . $pass_sol . '</wsse:Password>
-                    </wsse:UsernameToken>
-                </wsse:Security>
-            </soapenv:Header>
-            <soapenv:Body>
-                <ser:sendBill>
-                    <fileName>' . $archivo . '.zip</fileName>
-                    <contentFile>' . base64_encode(file_get_contents($ruta_archivo . '.zip')) . '</contentFile>
-                </ser:sendBill>
-            </soapenv:Body>
-        </soapenv:Envelope>';
-
+        $xml_post_string = file_get_contents($ruta_archivo . '.xml');
         $headers = array(
             "Content-type: text/xml;charset=\"utf-8\"",
             "Accept: text/xml",
             "Cache-Control: no-cache",
             "Pragma: no-cache",
-            "SOAPAction: urn: http://tempuri.org/IService/Registrar",
+            "SOAPAction: http://tempuri.org/IService/Registrar",
             "Content-length: " . strlen($xml_post_string),
         );
-
         $url = $soapUrl;
-
-        # IMPRIMIR REQUEST
-        // echo $xml_post_string;
-        // echo '<br>';
-        // echo $soapUrl;
-        // exit();
-
         // PHP cURL  for https connection with auth
             $ch = curl_init();
             curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 1);
@@ -806,34 +771,26 @@ class Apisunat {
                 $doc = new DOMDocument();
                 $doc->loadXML($response);
                 //===================VERIFICAMOS SI HA ENVIADO CORRECTAMENTE EL COMPROBANTE=====================
-                if (isset($doc->getElementsByTagName('applicationResponse')->item(0)->nodeValue)) {
-                    $xmlCDR = $doc->getElementsByTagName('applicationResponse')->item(0)->nodeValue;
-                    $rZip = file_put_contents($ruta_archivo_cdr . 'R-' . $archivo . '.zip', base64_decode($xmlCDR));
-
-                    //extraemos archivo zip a xml
-                    $zip = new ZipArchive;
-                    $extractTo = 'failed';
-                    if ($zip->open($ruta_archivo_cdr . 'R-' . $archivo . '.zip') === TRUE) {
-                        $zip->extractTo($ruta_archivo_cdr, 'R-' . $archivo . '.xml');
-                        $zip->close();
-                        $extractTo = 'OK';
+                if (isset($doc->getElementsByTagName('RegistrarResult')->item(0)->nodeValue)) {
+                    $result = $doc->getElementsByTagName('RegistrarResult')->item(0)->nodeValue;
+                    if ($result === "true") {
+                        $resp['respuesta'] = 'ok';
+                        $resp['codigo_barras'] = $doc->getElementsByTagName('CodigoBarras')->item(0)->nodeValue;
+                        $resp['mensaje'] = $doc->getElementsByTagName('Cadena')->item(0)->nodeValue;
+                        $resp['codigo_hash'] = $doc->getElementsByTagName('CodigoHash')->item(0)->nodeValue;
+                        $resp['response_xml'] = $response;
+                    } else {
+                        $resp['respuesta'] = 'error';
+                        $resp['codigo_barras'] = $doc->getElementsByTagName('CodigoBarras')->item(0)->nodeValue;
+                        $resp['mensaje'] = $doc->getElementsByTagName('Cadena')->item(0)->nodeValue;
+                        $resp['codigo_hash'] = $doc->getElementsByTagName('CodigoHash')->item(0)->nodeValue;
+                        $resp['response_xml'] = $response;
                     }
-                    //eliminamos los archivos Zipeados
-                    unlink($ruta_archivo . '.zip');
-                    unlink($ruta_archivo_cdr . 'R-' . $archivo . '.zip');
-                    //=============hash CDR=================
-                    $doc_cdr = new DOMDocument();
-                    $doc_cdr->load($ruta_archivo_cdr . 'R-' . $archivo . '.xml');
-                    $resp['respuesta'] = 'ok';
-                    $resp['cod_sunat'] = $doc_cdr->getElementsByTagName('ResponseCode')->item(0)->nodeValue;
-                    $resp['mensaje'] = $doc_cdr->getElementsByTagName('Description')->item(0)->nodeValue;
-                    $resp['hash_cdr'] = $doc_cdr->getElementsByTagName('DigestValue')->item(0)->nodeValue;
-                    $resp['response_xml'] = $response;
                 } else {
                     $resp['respuesta'] = 'error';
-                    $resp['cod_sunat'] = $doc->getElementsByTagName('faultcode')->item(0)->nodeValue;
-                    $resp['mensaje'] = $doc->getElementsByTagName('faultstring')->item(0)->nodeValue;
-                    $resp['hash_cdr'] = "";
+                    // $resp['cod_sunat'] = $doc->getElementsByTagName('faultcode')->item(0)->nodeValue;
+                    // $resp['mensaje'] = $doc->getElementsByTagName('faultstring')->item(0)->nodeValue;
+                    // $resp['hash_cdr'] = "";
                     $resp['response_xml'] = $response;
                 }
             } else {
@@ -843,8 +800,6 @@ class Apisunat {
                 $resp['url'] = $url;
                 $resp['response_xml'] = $response;
                 $resp['error_code'] = $httpcode;
-                // $resp['request'] = $xml_post_string;
-                // $resp['mensaje'] = "Código de Error: 0000 <br /> Web Service de Prueba SUNAT - Fuera de Servicio: <a href='https://e-beta.sunat.gob.pe:443/ol-ti-itcpfegem-beta/billService' target='_blank'>https://e-beta.sunat.gob.pe:443/ol-ti-itcpfegem-beta/billService</a>, Para validar la información llamar al: *4000 (Desde Claro, Entel y Movistar) - SUNAT";
                 $resp['hash_cdr'] = "";
             }
             return $resp;
@@ -1612,6 +1567,10 @@ class Apisunat {
     }
 
     private function soapCall($wsdlURL, $callFunction = "SendBill", $XMLString, $file_name = "", $dircdr = "/R") {
+
+        // var_dump("soapCall", $wsdlURL, $callFunction, $XMLString, $file_name, $dircdr);
+        // exit();
+
         $result = null;
         $faultcode = '0';
         $endpoint  = $wsdlURL;

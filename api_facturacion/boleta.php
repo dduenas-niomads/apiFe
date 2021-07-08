@@ -78,6 +78,7 @@
 	
 	function get_array_cabecera($data, $emisor) {
 		$cabecera = array(
+			'DIAS_VENCIMIENTO' => (isset($data['dias_vencimiento'])) ? $data['dias_vencimiento'] : "0",
 			'TIPO_OPERACION' => (isset($data['tipo_operacion'])) ? $data['tipo_operacion'] : "", //pag. 28
 	        'TOTAL_GRAVADAS' => (isset($data['total_gravadas'])) ? $data['total_gravadas'] : "0",
 	        'TOTAL_INAFECTA' => (isset($data['total_inafecta'])) ? $data['total_inafecta'] : "0",

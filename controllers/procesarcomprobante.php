@@ -54,12 +54,12 @@ class Procesarcomprobante {
 			return $resp_envio;
 		}		
 		
-		$resp['respuesta'] = 'ok';
-		$resp['hash_cpe'] = $resp_firma['hash_cpe'];
-		$resp['hash_cdr'] = $resp_envio['hash_cdr'];
-		$resp['cod_sunat'] = $resp_envio['cod_sunat'];
-		$resp['msj_sunat'] = $resp_envio['mensaje'];
-		return $resp;
+		// $resp['respuesta'] = 'ok';
+		// $resp['hash_cpe'] = $resp_firma['hash_cpe'];
+		// $resp['hash_cdr'] = $resp_envio['hash_cdr'];
+		// $resp['cod_sunat'] = $resp_envio['cod_sunat'];
+		// $resp['msj_sunat'] = $resp_envio['mensaje'];
+		return $resp_envio;
 	}
 
 	public function procesar_boleta($data_comprobante, $items_detalle, $rutas, $idDocumento = null, $appId = null) {
@@ -80,12 +80,12 @@ class Procesarcomprobante {
 			return $resp_envio;
 		}
 		
-		$resp['respuesta'] = 'ok';
-		$resp['hash_cpe'] = $resp_firma['hash_cpe'];
-		$resp['hash_cdr'] = $resp_envio['hash_cdr'];
-		$resp['cod_sunat'] = $resp_envio['cod_sunat'];
-		$resp['msj_sunat'] = $resp_envio['mensaje'];
-		return $resp;
+		// $resp['respuesta'] = 'ok';
+		// $resp['hash_cpe'] = $resp_firma['hash_cpe'];
+		// $resp['hash_cdr'] = $resp_envio['hash_cdr'];
+		// $resp['cod_sunat'] = $resp_envio['cod_sunat'];
+		// $resp['msj_sunat'] = $resp_envio['mensaje'];
+		return $resp_envio;
 	}
 
 	public function procesar_nota_de_credito($data_comprobante, $items_detalle, $rutas, $idDocumento = null, $appId = null) {
