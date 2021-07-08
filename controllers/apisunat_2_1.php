@@ -19,36 +19,38 @@ class Apisunat {
                     <a:oENComprobante>
                         <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>';
                         for ($i = 0; $i < count($detalle); $i++) {
-                            $xmlCPE = $xmlCPE .'<a:ComprobanteDetalle>
-                            <a:ENComprobanteDetalle>
-                                <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
-                                <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
-                                <a:CodigoTipoPrecio>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</a:CodigoTipoPrecio>
-                                <a:ComprobanteDetalleImpuestos>
-                                    <a:ENComprobanteDetalleImpuestos>
-                                        <a:AfectacionIGV>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</a:AfectacionIGV>
-                                        <a:CodigoTributo>1000</a:CodigoTributo>
-                                        <a:CodigoUN>VAT</a:CodigoUN>
-                                        <a:DesTributo>IGV</a:DesTributo>
-                                        <a:ImporteExplicito>'.$detalle[$i]["txtIGV"].'</a:ImporteExplicito>
-                                        <a:ImporteTributo>'.$detalle[$i]["txtIGV"].'</a:ImporteTributo>
-                                        <a:MontoBase>'.$detalle[$i]["txtIMPORTE_DET"].'</a:MontoBase>
-                                        <a:TasaAplicada>18</a:TasaAplicada>
-                                    </a:ENComprobanteDetalleImpuestos>
-                                </a:ComprobanteDetalleImpuestos>
-                                <a:Descripcion>'.$detalle[$i]["txtDESCRIPCION_DET"].'</a:Descripcion>
-                                <a:Determinante>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Determinante>
-                                <a:ImpuestoTotal>'.$detalle[$i]["txtIGV"].'</a:ImpuestoTotal>
-                                <a:Item>' . $detalle[$i]["txtITEM"] . '</a:Item>
-                                <a:PrecioVentaItem>'.$detalle[$i]["txtPRECIO_DET"].'</a:PrecioVentaItem>
-                                <a:Total>'.$detalle[$i]["txtSUB_TOTAL_DET"].'</a:Total>
-                                <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
-                                <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
-                                <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
-                            </a:ENComprobanteDetalle>
-                        </a:ComprobanteDetalle>';
+                            $xmlCPE = $xmlCPE .'
+                            <a:ComprobanteDetalle>
+                                <a:ENComprobanteDetalle>
+                                    <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
+                                    <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
+                                    <a:CodigoTipoPrecio>'.$detalle[$i]["txtPRECIO_TIPO_CODIGO"].'</a:CodigoTipoPrecio>
+                                    <a:ComprobanteDetalleImpuestos>
+                                        <a:ENComprobanteDetalleImpuestos>
+                                            <a:AfectacionIGV>'.$detalle[$i]["txtCOD_TIPO_OPERACION"].'</a:AfectacionIGV>
+                                            <a:CodigoTributo>1000</a:CodigoTributo>
+                                            <a:CodigoUN>VAT</a:CodigoUN>
+                                            <a:DesTributo>IGV</a:DesTributo>
+                                            <a:ImporteExplicito>'.$detalle[$i]["txtIGV"].'</a:ImporteExplicito>
+                                            <a:ImporteTributo>'.$detalle[$i]["txtIGV"].'</a:ImporteTributo>
+                                            <a:MontoBase>'.$detalle[$i]["txtIMPORTE_DET"].'</a:MontoBase>
+                                            <a:TasaAplicada>18</a:TasaAplicada>
+                                        </a:ENComprobanteDetalleImpuestos>
+                                    </a:ComprobanteDetalleImpuestos>
+                                    <a:Descripcion>'.$detalle[$i]["txtDESCRIPCION_DET"].'</a:Descripcion>
+                                    <a:Determinante>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Determinante>
+                                    <a:ImpuestoTotal>'.$detalle[$i]["txtIGV"].'</a:ImpuestoTotal>
+                                    <a:Item>' . $detalle[$i]["txtITEM"] . '</a:Item>
+                                    <a:PrecioVentaItem>'.$detalle[$i]["txtPRECIO_DET"].'</a:PrecioVentaItem>
+                                    <a:Total>'.$detalle[$i]["txtSUB_TOTAL_DET"].'</a:Total>
+                                    <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
+                                    <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
+                                    <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
+                                </a:ENComprobanteDetalle>
+                            </a:ComprobanteDetalle>';
                     }
-                        $xmlCPE = $xmlCPE .'<a:ComprobanteGrillaCuenta>
+                        $xmlCPE = $xmlCPE .'
+                        <a:ComprobanteGrillaCuenta>
                             <a:ENComprobanteGrillaCuenta>
                                 <a:Descripcion>BCP SOLES</a:Descripcion>
                                 <a:Valor1>SOLES</a:Valor1>
@@ -72,13 +74,24 @@ class Apisunat {
                         <a:FormaPago>
                             <a:ENFormaPago>
                                 <a:CodigoFormaPago>001</a:CodigoFormaPago>
-                                <a:DiasVencimiento>30</a:DiasVencimiento>
+                                <a:DiasVencimiento>'.$cabecera["DIAS_VENCIMIENTO"].'</a:DiasVencimiento>
                                 <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
-                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
+                                <a:NotaInstruccion>'.$cabecera["INSTRUCCION"].'</a:NotaInstruccion>
                             </a:ENFormaPago>
                         </a:FormaPago>
-                        <a:FormaPagoSunat>
-                            <a:TipoFormaPago>1</a:TipoFormaPago>
+                        <a:FormaPagoSunat>';
+                        if ($cabecera["INSTRUCCION"]=="CREDITO") {
+                            $xmlCPE = $xmlCPE . '
+                            <a:CuotaPago>
+                                <a:ENCuotaPago>
+                                    <a:FechaPago>'.$cabecera["FECHA_PAGO_CUOTA"].'</a:FechaPago>
+                                    <a:Monto>'.$cabecera["MONTO_PAGO_CUOTA"].'</a:Monto>
+                                </a:ENCuotaPago>
+                            </a:CuotaPago>
+                            <a:MontoPendientePago>'.$cabecera["MONTO_PAGO_CUOTA"].'</a:MontoPendientePago>';
+                        }
+                        $xmlCPE = $xmlCPE . '
+                            <a:TipoFormaPago>'.$cabecera["FORMA_PAGO_SUNAT"].'</a:TipoFormaPago>
                         </a:FormaPagoSunat>
                         <a:HoraEmision>12:00:00</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>

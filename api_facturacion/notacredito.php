@@ -97,9 +97,15 @@
 	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
 	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
+			'DIAS_VENCIMIENTO' => (isset($data['dias_vencimiento'])) ? $data['dias_vencimiento'] : "30",
 			'FECHA_VTO' => $data['fecha_vto_comprobante'], //pag. 31 //fecha de vencimiento
-			'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
-	        'COD_MONEDA' => $data['cod_moneda'],
+			'INSTRUCCION' => $data['instruccion'],
+	        'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
+			'COD_MONEDA' => $data['cod_moneda'],
+	        //======= PAGO EN CUOTAS ===================================
+	        'FORMA_PAGO_SUNAT' => $data['forma_pago_sunat'],
+			'FECHA_PAGO_CUOTA' => $data['fecha_pago_cuota'],
+			'MONTO_PAGO_CUOTA' => $data['monto_pago_cuota'],
 	        //==============================================
 	        'NRO_GUIA_REMISION' => (isset($data['nro_guia_remision'])) ? $data['nro_guia_remision'] : "",
 	        'COD_GUIA_REMISION' => (isset($data['cod_guia_remision'])) ? $data['cod_guia_remision'] : "",
