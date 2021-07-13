@@ -203,9 +203,10 @@ class Apisunat {
                         <a:Ruc>'.$cabecera["EMISOR_RUC"].'</a:Ruc>
                     </a:Autenticacion>
                     <a:oENComprobante>
-                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>';
+                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>
+                        <a:ComprobanteDetalle>';
                         for ($i = 0; $i < count($detalle); $i++) {
-                            $xmlCPE = $xmlCPE .'<a:ComprobanteDetalle>
+                            $xmlCPE = $xmlCPE .'
                             <a:ENComprobanteDetalle>
                                 <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
                                 <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
@@ -231,10 +232,11 @@ class Apisunat {
                                 <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
                                 <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
                                 <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
-                            </a:ENComprobanteDetalle>
-                        </a:ComprobanteDetalle>';
-                    }
-                        $xmlCPE = $xmlCPE .'<a:ComprobanteGrillaCuenta>
+                            </a:ENComprobanteDetalle>';
+                            }
+                            $xmlCPE = $xmlCPE .'
+                        </a:ComprobanteDetalle>
+                        <a:ComprobanteGrillaCuenta>
                             <a:ENComprobanteGrillaCuenta>
                                 <a:Descripcion>BCP SOLES</a:Descripcion>
                                 <a:Valor1>SOLES</a:Valor1>
@@ -395,9 +397,10 @@ class Apisunat {
                         <a:Ruc>'.$cabecera["EMISOR_RUC"].'</a:Ruc>
                     </a:Autenticacion>
                     <a:oENComprobante>
-                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>';
+                        <a:CodigoCliente>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:CodigoCliente>
+                        <a:ComprobanteDetalle>';
                         for ($i = 0; $i < count($detalle); $i++) {
-                            $xmlCPE = $xmlCPE .'<a:ComprobanteDetalle>
+                            $xmlCPE = $xmlCPE .'
                             <a:ENComprobanteDetalle>
                                 <a:Cantidad>'.$detalle[$i]["txtCANTIDAD_DET"].'</a:Cantidad>
                                 <a:CodigoProductoSunat>'.$detalle[$i]["txtCODIGO_DET"].'</a:CodigoProductoSunat>
@@ -423,10 +426,11 @@ class Apisunat {
                                 <a:UnidadComercial>'.$detalle[$i]["txtUNIDAD_MEDIDA_DET"].'</a:UnidadComercial>
                                 <a:ValorVentaUnitario>'.$detalle[$i]["txtIMPORTE_DET"].'</a:ValorVentaUnitario>
                                 <a:ValorVentaUnitarioIncIgv>'.$detalle[$i]["txtPRECIO_DET"].'</a:ValorVentaUnitarioIncIgv>
-                            </a:ENComprobanteDetalle>
-                        </a:ComprobanteDetalle>';
-                    }
-                        $xmlCPE = $xmlCPE .'<a:ComprobanteGrillaCuenta>
+                            </a:ENComprobanteDetalle>';
+                            }
+                            $xmlCPE = $xmlCPE .'
+                        </a:ComprobanteDetalle>
+                        <a:ComprobanteGrillaCuenta>
                             <a:ENComprobanteGrillaCuenta>
                                 <a:Descripcion>BCP SOLES</a:Descripcion>
                                 <a:Valor1>SOLES</a:Valor1>
