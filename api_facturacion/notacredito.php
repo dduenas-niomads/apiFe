@@ -80,6 +80,7 @@
 	
 	function get_array_cabecera($data, $emisor) {
 		$cabecera = array(
+			'TIPO_OPERACION' => (isset($data['tipo_operacion'])) ? $data['tipo_operacion'] : "", //pag. 28
 			'TOTAL_GRAVADAS' => (isset($data['total_gravadas'])) ? $data['total_gravadas'] : "0",
 	        'POR_IGV' => (isset($data['porcentaje_igv'])) ? $data['porcentaje_igv'] : "0", //Porcentaje del impuesto
 	        'TOTAL_IGV' => (isset($data['total_igv'])) ? $data['total_igv'] : "0",
