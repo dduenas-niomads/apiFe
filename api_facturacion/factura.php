@@ -122,6 +122,11 @@
 			'INSTRUCCION' => $data['instruccion'],
 	        'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
 			'COD_MONEDA' => $data['cod_moneda'],
+	        //======= RETENCION ===================================
+	        'RETENCION' => (isset($data['retencion'])) ? $data['retencion'] : "0",
+			'MONTO_RETENCION' => $data['monto_retencion'],
+			'MONTO_BASE' => $data['monto_base'],
+			'PORCENTAJE_RETENCION' => $data['porcentaje_retencion'],
 	        //======= DETRACCIONES ===================================
 	        'DETRACCION' => (isset($data['detraccion'])) ? $data['detraccion'] : "0",
 			'VALOR_BS_DETRACCION' => $data['valor_bs_detraccion'],

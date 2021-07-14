@@ -159,7 +159,16 @@ class Apisunat {
                                 <a:Distrito>'.$cabecera["DISTRITO_CLIENTE"].'</a:Distrito>
                                 <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
                             </a:ENReceptor>
-                        </a:Receptor>
+                        </a:Receptor>';
+                        if (intval($cabecera["RETENCION"]) > 0) {
+                        $xmlCPE = $xmlCPE . '
+                        <a:Retencion>
+                            <a:Monto>'.$cabecera["MONTO_RETENCION"].'</a:Monto>
+                            <a:MontoBase>'.$cabecera["MONTO_BASE"].'</a:MontoBase>
+                            <a:Porcentaje>'.$cabecera["PORCENTAJE_RETENCION"].'</a:Porcentaje>
+                        </a:Retencion>';
+                        }
+                        $xmlCPE = $xmlCPE . '
                         <a:Ruc>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:Ruc>
                         <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
                         <a:Sucursal>
