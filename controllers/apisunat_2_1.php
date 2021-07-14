@@ -68,8 +68,49 @@ class Apisunat {
                             <a:ENComprobantePropiedadesAdicionales>
                                 <a:Codigo>1000</a:Codigo>
                                 <a:Valor>'.$cabecera["TOTAL_LETRAS"].'</a:Valor>
+                            </a:ENComprobantePropiedadesAdicionales>';
+                        if (intval($cabecera["DETRACCION"]) > 0) {
+                        $xmlCPE = $xmlCPE . '
+                            <a:ENComprobantePropiedadesAdicionales>
+                                <a:Codigo>2006</a:Codigo>
+                                <a:Valor>OPERACION SUJETA A DETRACCION</a:Valor>
                             </a:ENComprobantePropiedadesAdicionales>
                         </a:ComprobantePropiedadesAdicionales>
+                        <a:Detraccion>
+                            <a:ENDetraccion>
+                                <a:BienesServicios>
+                                    <a:ENBienesServicios>
+                                        <a:Codigo>'.$cabecera["CODIGO_BS_DETRACCION"].'</a:Codigo>
+                                        <a:Valor>'.$cabecera["VALOR_BS_DETRACCION"].'</a:Valor>
+                                    </a:ENBienesServicios>
+                                </a:BienesServicios> 
+                                <a:Monto>                                      
+                                    <a:ENMonto>
+                                        <a:Codigo>'.$cabecera["CODIGO_MONTO_DETRACCION"].'</a:Codigo>
+                                        <a:Valor>'.$cabecera["MONTO_DETRACCION"].'</a:Valor>
+                                    </a:ENMonto>
+                                </a:Monto>  
+                                <a:NumeroCuenta>
+                                    <a:ENNumeroCuenta>
+                                        <a:Codigo>3001</a:Codigo>
+                                        <a:CodigoFormaPago>001</a:CodigoFormaPago>
+                                        <a:Valor>'.$cabecera["NRO_CUENTA_BN"].'</a:Valor>
+                                    </a:ENNumeroCuenta>
+                                </a:NumeroCuenta> 
+                                <a:Porcentaje>                      
+                                    <a:ENPorcentaje>
+                                        <a:Codigo>'.$cabecera["CODIGO_PORCENTAJE_DETRACCION"].'</a:Codigo>
+                                        <a:Valor>'.$cabecera["VALOR_PORCENTAJE_DETRACCION"].'</a:Valor>
+                                    </a:ENPorcentaje>
+                                </a:Porcentaje>
+                            </a:ENDetraccion> 
+                        </a:Detraccion>';
+                        }
+                        else {
+                            $xmlCPE = $xmlCPE . '
+                        </a:ComprobantePropiedadesAdicionales>';
+                        }
+                        $xmlCPE = $xmlCPE . '                        
                         <a:FechaEmision>'.$cabecera["FECHA_DOCUMENTO"].'</a:FechaEmision>
                         <a:FormaPago>
                             <a:ENFormaPago>

@@ -122,6 +122,15 @@
 			'INSTRUCCION' => $data['instruccion'],
 	        'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
 			'COD_MONEDA' => $data['cod_moneda'],
+	        //======= DETRACCIONES ===================================
+	        'DETRACCION' => (isset($data['detraccion'])) ? $data['detraccion'] : "0",
+			'VALOR_BS_DETRACCION' => $data['valor_bs_detraccion'],
+			'CODIGO_BS_DETRACCION' => $data['codigo_bs_detraccion'],
+			'CODIGO_MONTO_DETRACCION' => $data['codigo_monto_detraccion'],
+			'MONTO_DETRACCION' => $data['monto_detraccion'],
+			'NRO_CUENTA_BN' => $data['nro_cuenta_bn'],
+			'CODIGO_PORCENTAJE_DETRACCION' => $data['codigo_porcentaje_detraccion'],
+			'VALOR_PORCENTAJE_DETRACCION' => $data['valor_porcentaje_detraccion'],
 	        //======= PAGO EN CUOTAS ===================================
 	        'FORMA_PAGO_SUNAT' => $data['forma_pago_sunat'],
 			'FECHA_PAGO_CUOTA' => $data['fecha_pago_cuota'],
