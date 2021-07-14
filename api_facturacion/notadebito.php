@@ -97,6 +97,7 @@
 	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
 	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
+			'HORA_DOCUMENTO' => $data['hora_comprobante'],
 			'FECHA_VTO' => $data['fecha_vto_comprobante'], //pag. 31 //fecha de vencimiento
 			'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
 	        'COD_MONEDA' => $data['cod_moneda'],
@@ -127,10 +128,29 @@
 			'CODIGO_PAIS_EMPRESA' => $emisor['direccion_codigopais'],
 			'RAZON_SOCIAL_EMPRESA' => $emisor['razon_social'],
 			'CONTACTO_EMPRESA' => "",
+			'CORREO_EMPRESA' => $emisor['correo'],
+			'TELEFONO_EMPRESA' => $emisor['telefono'],
+			'WEB_EMPRESA' => $emisor['web'],
 	        //===================CLAVES SOL EMISOR====================//
 	        'EMISOR_RUC' => $emisor['ruc'],
 	        'EMISOR_USUARIO_SOL' => $emisor['usuariosol'],
-			'EMISOR_PASS_SOL' => $emisor['clavesol']
+			'EMISOR_PASS_SOL' => $emisor['clavesol'],
+
+			//======== TEXTOS =================================
+	        'TEXTO_ENCABEZADO' => $emisor['texto_encabezado'],
+	        'TEXTO_TARIFA' => $emisor['texto_tarifa'],
+			'TEXTO_DESCRIPCION' => $emisor['texto_descripcion'],
+	        'TEXTO_12' => $emisor['texto_12'],
+	        'TEXTO_13' => $emisor['texto_13'],
+	        'TEXTO_14' => $emisor['texto_14'],
+	        'TEXTO_REFERENCIA' => $emisor['texto_referencia'],
+	        'TEXTO_NRO_ORDEN' => $emisor['texto_nro_orden'],
+	        'TEXTO_DEL' => $emisor['texto_del'],
+	        'TEXTO_AL' => $emisor['texto_al'],
+	        'TEXTO_DIAS' => $emisor['texto_dias'],
+	        'TEXTO_CANTIDAD' => $emisor['texto_cantidad'],
+	        'TEXTO_BULTOS' => $emisor['texto_bultos'],
+	        'TEXTO_VALOR' => $emisor['texto_valor']
 		);
 		
 		return $cabecera;
@@ -157,6 +177,9 @@
 		$emisor['direccion_departamento'] 	= (isset($data_emisor['direccion_departamento'])) ? $data_emisor['direccion_departamento'] : '';
 		$emisor['direccion_provincia'] 		= (isset($data_emisor['direccion_provincia'])) ? $data_emisor['direccion_provincia'] : '';
 		$emisor['direccion_distrito'] 		= (isset($data_emisor['direccion_distrito'])) ? $data_emisor['direccion_distrito'] : '';
+		$emisor['correo'] 					= (isset($data_emisor['correo'])) ? $data_emisor['correo'] : '';
+		$emisor['web'] 						= (isset($data_emisor['web'])) ? $data_emisor['web'] : '';
+		$emisor['telefono'] 				= (isset($data_emisor['telefono'])) ? $data_emisor['telefono'] : '';
 		$emisor['direccion_codigopais'] 	= (isset($data_emisor['direccion_codigopais'])) ? $data_emisor['direccion_codigopais'] : '';
 		$emisor['pass_firma'] 				= (isset($data_emisor['pass_firma'])) ? $data_emisor['pass_firma'] : '';
 

@@ -134,7 +134,7 @@ class Apisunat {
                         $xmlCPE = $xmlCPE . '
                             <a:TipoFormaPago>'.$cabecera["FORMA_PAGO_SUNAT"].'</a:TipoFormaPago>
                         </a:FormaPagoSunat>
-                        <a:HoraEmision>12:00:00</a:HoraEmision>
+                        <a:HoraEmision>'.$cabecera["HORA_DOCUMENTO"].'</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
                         <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
                         <a:MontosTotales>
@@ -181,20 +181,20 @@ class Apisunat {
                         </a:Sucursal>
                         <a:Texto>
                             <a:ENTexto>
-                                <a:Texto1>TEXTO EN ENCABEZADO Texto 1</a:Texto1>
-                                <a:Texto10>Texto 10</a:Texto10>               
-                                <a:Texto11>Texto 11</a:Texto11>                     
-                                <a:Texto12>Twxto 12</a:Texto12>                     
-                                <a:Texto13>Texto 13</a:Texto13>                     
-                                <a:Texto14>Texto 14</a:Texto14> 
-                                <a:Texto2>REFERENCIA Texto 2</a:Texto2>                     
-                                <a:Texto3>2021013 Texto 3</a:Texto3>                     
-                                <a:Texto4>DEL Texto 4</a:Texto4>                     
-                                <a:Texto5>AL Texto 5</a:Texto5>                     
-                                <a:Texto6>DIAS Texto 6</a:Texto6>                     
-                                <a:Texto7>Cant Texto 7</a:Texto7>                     
-                                <a:Texto8>Bultos Texto 8</a:Texto8>                     
-                                <a:Texto9>Valor Texto 9</a:Texto9>                  
+                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>
+                                <a:Texto10>'.$cabecera["TEXTO_TARIFA"].'</a:Texto10>               
+                                <a:Texto11>'.$cabecera["TEXTO_DESCRIPCION"].'</a:Texto11>                     
+                                <a:Texto12>'.$cabecera["TEXTO_12"].'</a:Texto12>                     
+                                <a:Texto13>'.$cabecera["TEXTO_13"].'</a:Texto13>                     
+                                <a:Texto14>'.$cabecera["TEXTO_14"].'</a:Texto14> 
+                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>                     
+                                <a:Texto3>'.$cabecera["TEXTO_NRO_ORDEN"].'</a:Texto3>                     
+                                <a:Texto4>'.$cabecera["TEXTO_DEL"].'</a:Texto4>                     
+                                <a:Texto5>'.$cabecera["TEXTO_AL"].'</a:Texto5>                     
+                                <a:Texto6>'.$cabecera["TEXTO_DIAS"].'</a:Texto6>                     
+                                <a:Texto7>'.$cabecera["TEXTO_CANTIDAD"].'</a:Texto7>                     
+                                <a:Texto8>'.$cabecera["TEXTO_BULTOS"].'</a:Texto8>                     
+                                <a:Texto9>'.$cabecera["TEXTO_VALOR"].'</a:Texto9>                  
                             </a:ENTexto>
                         </a:Texto>
                         <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
@@ -212,15 +212,15 @@ class Apisunat {
                         <a:CodPais>'.$cabecera["CODIGO_PAIS_EMPRESA"].'</a:CodPais>
                         <a:CodigoEstablecimientoSUNAT>0000</a:CodigoEstablecimientoSUNAT>
                         <a:CodigoTipoDocumento>'.$cabecera["TIPO_DOCUMENTO_EMPRESA"].'</a:CodigoTipoDocumento>
-                        <a:Correo>prueba@aldesa.com.pe</a:Correo>
+                        <a:Correo>'.$cabecera["CORREO_EMPRESA"].'</a:Correo>
                         <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
                         <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
                         <a:NombreComercial>'.$cabecera["NOMBRE_COMERCIAL_EMPRESA"].'</a:NombreComercial>
                         <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
                         <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_EMPRESA"].'</a:RazonSocial>
                         <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
-                        <a:Telefono>322-5555</a:Telefono>
-                        <a:Web>www.aldesaprueba.com.pe</a:Web>
+                        <a:Telefono>'.$cabecera["TELEFONO_EMPRESA"].'</a:Telefono>
+                        <a:Web>'.$cabecera["WEB_EMPRESA"].'</a:Web>
                     </a:oENEmpresa>
                 </oGeneral>
                 <oTipoComprobante>'.$cabecera["TIPO_DOCUMENTO"].'</oTipoComprobante>
@@ -338,7 +338,7 @@ class Apisunat {
                         <a:FormaPagoSunat>
                             <a:TipoFormaPago>1</a:TipoFormaPago>
                         </a:FormaPagoSunat>
-                        <a:HoraEmision>12:00:00</a:HoraEmision>
+                        <a:HoraEmision>'.$cabecera["HORA_DOCUMENTO"].'</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
                         <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
                         <a:MontosTotales>
@@ -376,20 +376,20 @@ class Apisunat {
                         </a:Sucursal>
                         <a:Texto>
                             <a:ENTexto>
-                                <a:Texto1>TEXTO EN ENCABEZADO Texto 1</a:Texto1>
-                                <a:Texto10>Texto 10</a:Texto10>               
-                                <a:Texto11>Texto 11</a:Texto11>                     
-                                <a:Texto12>Twxto 12</a:Texto12>                     
-                                <a:Texto13>Texto 13</a:Texto13>                     
-                                <a:Texto14>Texto 14</a:Texto14> 
-                                <a:Texto2>REFERENCIA Texto 2</a:Texto2>                     
-                                <a:Texto3>2021013 Texto 3</a:Texto3>                     
-                                <a:Texto4>DEL Texto 4</a:Texto4>                     
-                                <a:Texto5>AL Texto 5</a:Texto5>                     
-                                <a:Texto6>DIAS Texto 6</a:Texto6>                     
-                                <a:Texto7>Cant Texto 7</a:Texto7>                     
-                                <a:Texto8>Bultos Texto 8</a:Texto8>                     
-                                <a:Texto9>Valor Texto 9</a:Texto9>                  
+                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>
+                                <a:Texto10>'.$cabecera["TEXTO_TARIFA"].'</a:Texto10>               
+                                <a:Texto11>'.$cabecera["TEXTO_DESCRIPCION"].'</a:Texto11>                     
+                                <a:Texto12>'.$cabecera["TEXTO_12"].'</a:Texto12>                     
+                                <a:Texto13>'.$cabecera["TEXTO_13"].'</a:Texto13>                     
+                                <a:Texto14>'.$cabecera["TEXTO_14"].'</a:Texto14> 
+                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>                     
+                                <a:Texto3>'.$cabecera["TEXTO_NRO_ORDEN"].'</a:Texto3>                     
+                                <a:Texto4>'.$cabecera["TEXTO_DEL"].'</a:Texto4>                     
+                                <a:Texto5>'.$cabecera["TEXTO_AL"].'</a:Texto5>                     
+                                <a:Texto6>'.$cabecera["TEXTO_DIAS"].'</a:Texto6>                     
+                                <a:Texto7>'.$cabecera["TEXTO_CANTIDAD"].'</a:Texto7>                     
+                                <a:Texto8>'.$cabecera["TEXTO_BULTOS"].'</a:Texto8>                     
+                                <a:Texto9>'.$cabecera["TEXTO_VALOR"].'</a:Texto9>                  
                             </a:ENTexto>
                         </a:Texto>
                         <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
@@ -407,15 +407,15 @@ class Apisunat {
                         <a:CodPais>'.$cabecera["CODIGO_PAIS_EMPRESA"].'</a:CodPais>
                         <a:CodigoEstablecimientoSUNAT>0000</a:CodigoEstablecimientoSUNAT>
                         <a:CodigoTipoDocumento>'.$cabecera["TIPO_DOCUMENTO_EMPRESA"].'</a:CodigoTipoDocumento>
-                        <a:Correo>prueba@aldesa.com.pe</a:Correo>
+                        <a:Correo>'.$cabecera["CORREO_EMPRESA"].'</a:Correo>
                         <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
                         <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
                         <a:NombreComercial>'.$cabecera["NOMBRE_COMERCIAL_EMPRESA"].'</a:NombreComercial>
                         <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
                         <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_EMPRESA"].'</a:RazonSocial>
                         <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
-                        <a:Telefono>322-5555</a:Telefono>
-                        <a:Web>www.aldesaprueba.com.pe</a:Web>
+                        <a:Telefono>'.$cabecera["TELEFONO_EMPRESA"].'</a:Telefono>
+                        <a:Web>'.$cabecera["WEB_EMPRESA"].'</a:Web>
                     </a:oENEmpresa>
                 </oGeneral>
                 <oTipoComprobante>NotaCredito</oTipoComprobante>
@@ -532,7 +532,7 @@ class Apisunat {
                         <a:FormaPagoSunat>
                             <a:TipoFormaPago>1</a:TipoFormaPago>
                         </a:FormaPagoSunat>
-                        <a:HoraEmision>12:00:00</a:HoraEmision>
+                        <a:HoraEmision>'.$cabecera["HORA_DOCUMENTO"].'</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
                         <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
                         <a:MontosTotales>
@@ -570,20 +570,20 @@ class Apisunat {
                         </a:Sucursal>
                         <a:Texto>
                             <a:ENTexto>
-                                <a:Texto1>TEXTO EN ENCABEZADO Texto 1</a:Texto1>
-                                <a:Texto10>Texto 10</a:Texto10>               
-                                <a:Texto11>Texto 11</a:Texto11>                     
-                                <a:Texto12>Twxto 12</a:Texto12>                     
-                                <a:Texto13>Texto 13</a:Texto13>                     
-                                <a:Texto14>Texto 14</a:Texto14> 
-                                <a:Texto2>REFERENCIA Texto 2</a:Texto2>                     
-                                <a:Texto3>2021013 Texto 3</a:Texto3>                     
-                                <a:Texto4>DEL Texto 4</a:Texto4>                     
-                                <a:Texto5>AL Texto 5</a:Texto5>                     
-                                <a:Texto6>DIAS Texto 6</a:Texto6>                     
-                                <a:Texto7>Cant Texto 7</a:Texto7>                     
-                                <a:Texto8>Bultos Texto 8</a:Texto8>                     
-                                <a:Texto9>Valor Texto 9</a:Texto9>                  
+                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>
+                                <a:Texto10>'.$cabecera["TEXTO_TARIFA"].'</a:Texto10>               
+                                <a:Texto11>'.$cabecera["TEXTO_DESCRIPCION"].'</a:Texto11>                     
+                                <a:Texto12>'.$cabecera["TEXTO_12"].'</a:Texto12>                     
+                                <a:Texto13>'.$cabecera["TEXTO_13"].'</a:Texto13>                     
+                                <a:Texto14>'.$cabecera["TEXTO_14"].'</a:Texto14> 
+                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>                     
+                                <a:Texto3>'.$cabecera["TEXTO_NRO_ORDEN"].'</a:Texto3>                     
+                                <a:Texto4>'.$cabecera["TEXTO_DEL"].'</a:Texto4>                     
+                                <a:Texto5>'.$cabecera["TEXTO_AL"].'</a:Texto5>                     
+                                <a:Texto6>'.$cabecera["TEXTO_DIAS"].'</a:Texto6>                     
+                                <a:Texto7>'.$cabecera["TEXTO_CANTIDAD"].'</a:Texto7>                     
+                                <a:Texto8>'.$cabecera["TEXTO_BULTOS"].'</a:Texto8>                     
+                                <a:Texto9>'.$cabecera["TEXTO_VALOR"].'</a:Texto9>                  
                             </a:ENTexto>
                         </a:Texto>
                         <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
@@ -601,15 +601,15 @@ class Apisunat {
                         <a:CodPais>'.$cabecera["CODIGO_PAIS_EMPRESA"].'</a:CodPais>
                         <a:CodigoEstablecimientoSUNAT>0000</a:CodigoEstablecimientoSUNAT>
                         <a:CodigoTipoDocumento>'.$cabecera["TIPO_DOCUMENTO_EMPRESA"].'</a:CodigoTipoDocumento>
-                        <a:Correo>prueba@aldesa.com.pe</a:Correo>
+                        <a:Correo>'.$cabecera["CORREO_EMPRESA"].'</a:Correo>
                         <a:Departamento>'.$cabecera["DEPARTAMENTO_EMPRESA"].'</a:Departamento>
                         <a:Distrito>'.$cabecera["DISTRITO_EMPRESA"].'</a:Distrito>
                         <a:NombreComercial>'.$cabecera["NOMBRE_COMERCIAL_EMPRESA"].'</a:NombreComercial>
                         <a:Provincia>'.$cabecera["PROVINCIA_EMPRESA"].'</a:Provincia>
                         <a:RazonSocial>'.$cabecera["RAZON_SOCIAL_EMPRESA"].'</a:RazonSocial>
                         <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
-                        <a:Telefono>322-5555</a:Telefono>
-                        <a:Web>www.aldesaprueba.com.pe</a:Web>
+                        <a:Telefono>'.$cabecera["TELEFONO_EMPRESA"].'</a:Telefono>
+                        <a:Web>'.$cabecera["WEB_EMPRESA"].'</a:Web>
                     </a:oENEmpresa>
                 </oGeneral>
                 <oTipoComprobante>NotaDebito</oTipoComprobante>
