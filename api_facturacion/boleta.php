@@ -107,7 +107,7 @@
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
 			'HORA_DOCUMENTO' => $data['hora_comprobante'],
 			'DIAS_VENCIMIENTO' => (isset($data['dias_vencimiento'])) ? $data['dias_vencimiento'] : "30",
-			'FECHA_VTO' => $data['fecha_vto_comprobante'], //pag. 31 //fecha de vencimiento
+			'FECHA_VTO' => (isset($data['fecha_vto_comprobante'])) ? $data['fecha_vto_comprobante'] : $data['fecha_comprobante'],
 			'INSTRUCCION' => $data['instruccion'],
 	        'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
 			'COD_MONEDA' => $data['cod_moneda'],
