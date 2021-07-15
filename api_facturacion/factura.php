@@ -21,6 +21,7 @@
 
 	$array_emisor = get_array_emisor($data);
 	$array_detalle = get_array_detalle($data);
+	$array_bank = get_array_bank($data);
 	$tipodeproceso = (isset($data['tipo_proceso'])) ? $data['tipo_proceso'] : "3";
 
 	//rutas y nombres de archivos_xml_sunat
@@ -69,7 +70,7 @@
 	
 	$array_cabecera = get_array_cabecera($data, $array_emisor);
 	$procesarcomprobante = new Procesarcomprobante("factura", $rutas);
-	$resp = $procesarcomprobante->procesar_factura($array_cabecera, $array_detalle, $rutas, $ids, isset($data['app_id'])?$data['app_id']:null);
+	$resp = $procesarcomprobante->procesar_factura($array_cabecera, $array_detalle, $array_bank, $rutas, $ids, isset($data['app_id'])?$data['app_id']:null);
 	$folder = 'beta';
 	if ($tipodeproceso == '1') {
 		$folder = 'produccion';
@@ -215,6 +216,31 @@
 		*/
 		$detalle_documento = $data['detalle'];
 		return $detalle_documento;
+	}
+
+	function get_array_bank($data) {
+
+		/* la estructura del array con los items debe tener la siguiente estructura!
+		"detalle" => [
+                    {
+                        "txtITEM"          			=> 1,
+                        "txtUNIDAD_MEDIDA_DET"      => "NIU",
+                        "txtCANTIDAD_DET"           => "1",
+                        "txtPRECIO_DET"             => "100",
+                        "txtSUB_TOTAL_DET"          => "84.75",
+                        "txtPRECIO_TIPO_CODIGO"     => "01",
+                        "txtIGV"                 	=> "15.25",
+                        "txtISC"                  	=> "0",
+                        "txtIMPORTE_DET"            => "84.75",
+                        "txtCOD_TIPO_OPERACION"     => "10",
+                        "txtCODIGO_DET"             => "DSDFG",
+                        "txtDESCRIPCION_DET"   		=> "Producto 01",
+                        "txtPRECIO_SIN_IGV_DET"  	=> 84.75
+					}
+				]
+		*/
+		$detalle_bank = $data['bank'];
+		return $detalle_bank;
 	}
 
 	function get_array_emisor($data) {

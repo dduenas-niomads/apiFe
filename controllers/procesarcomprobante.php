@@ -37,9 +37,9 @@ class Procesarcomprobante {
 		}
 	}
 
-	public function procesar_factura($data_comprobante, $items_detalle, $rutas, $idDocumento = null, $appId = null) {
+	public function procesar_factura($data_comprobante, $items_detalle, $items_bank, $rutas, $idDocumento = null, $appId = null) {
 		$apisunat = new apisunat();
-		$resp = $apisunat->crear_xml_factura($data_comprobante, $items_detalle, $rutas['ruta_xml']);
+		$resp = $apisunat->crear_xml_factura($data_comprobante, $items_detalle, $items_bank, $rutas['ruta_xml']);
 		$signature = new Signature();
 		$flg_firma = "0";
 		
@@ -62,10 +62,10 @@ class Procesarcomprobante {
 		return $resp_envio;
 	}
 
-	public function procesar_boleta($data_comprobante, $items_detalle, $rutas, $idDocumento = null, $appId = null) {
+	public function procesar_boleta($data_comprobante, $items_detalle, $items_bank, $rutas, $idDocumento = null, $appId = null) {
 		$apisunat = new apisunat();
 		//El xml para factura y boleta es prácticamente el mismo
-		$resp = $apisunat->crear_xml_factura($data_comprobante, $items_detalle, $rutas['ruta_xml']);
+		$resp = $apisunat->crear_xml_factura($data_comprobante, $items_detalle, $items_bank, $rutas['ruta_xml']);
 
 		$signature = new Signature();
 		$flg_firma = "0";
@@ -88,9 +88,9 @@ class Procesarcomprobante {
 		return $resp_envio;
 	}
 
-	public function procesar_nota_de_credito($data_comprobante, $items_detalle, $rutas, $idDocumento = null, $appId = null) {
+	public function procesar_nota_de_credito($data_comprobante, $items_detalle, $items_bank, $rutas, $idDocumento = null, $appId = null) {
 		$apisunat = new apisunat();
-		$resp = $apisunat->crear_xml_nota_credito($data_comprobante, $items_detalle, $rutas['ruta_xml']);
+		$resp = $apisunat->crear_xml_nota_credito($data_comprobante, $items_detalle, $items_bank, $rutas['ruta_xml']);
 
 		$signature = new Signature();
 		$flg_firma = "0";
@@ -112,9 +112,9 @@ class Procesarcomprobante {
 		return $resp;
 	}
 
-	public function procesar_nota_de_debito($data_comprobante, $items_detalle, $rutas, $idDocumento = null, $appId = null) {
+	public function procesar_nota_de_debito($data_comprobante, $items_detalle, $items_bank, $rutas, $idDocumento = null, $appId = null) {
 		$apisunat = new apisunat();
-		$resp = $apisunat->crear_xml_nota_debito($data_comprobante, $items_detalle, $rutas['ruta_xml']);
+		$resp = $apisunat->crear_xml_nota_debito($data_comprobante, $items_detalle, $items_bank, $rutas['ruta_xml']);
 
 		$signature = new Signature();
 		$flg_firma = "0";
