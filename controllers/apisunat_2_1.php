@@ -323,16 +323,19 @@ class Apisunat {
                             </a:ENComprobantePropiedadesAdicionales>
                         </a:ComprobantePropiedadesAdicionales>
                         <a:FechaEmision>'.$cabecera["FECHA_DOCUMENTO"].'</a:FechaEmision>
-                        <a:FormaPago>
-                            <a:ENFormaPago>
-                                <a:CodigoFormaPago>001</a:CodigoFormaPago>
-                                <a:DiasVencimiento>30</a:DiasVencimiento>
-                                <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
-                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
-                            </a:ENFormaPago>
-                        </a:FormaPago>
-                        <a:FormaPagoSunat>
-                            <a:TipoFormaPago>1</a:TipoFormaPago>
+                        <a:FormaPago>';
+                        if ($cabecera["INSTRUCCION"]=="CREDITO") {
+                            $xmlCPE = $xmlCPE . '
+                            <a:CuotaPago>
+                                <a:ENCuotaPago>
+                                    <a:FechaPago>'.$cabecera["FECHA_PAGO_CUOTA"].'</a:FechaPago>
+                                    <a:Monto>'.$cabecera["MONTO_PAGO_CUOTA"].'</a:Monto>
+                                </a:ENCuotaPago>
+                            </a:CuotaPago>
+                            <a:MontoPendientePago>'.$cabecera["MONTO_PAGO_CUOTA"].'</a:MontoPendientePago>';
+                        }
+                        $xmlCPE = $xmlCPE . '
+                            <a:TipoFormaPago>'.$cabecera["FORMA_PAGO_SUNAT"].'</a:TipoFormaPago>
                         </a:FormaPagoSunat>
                         <a:HoraEmision>'.$cabecera["HORA_DOCUMENTO"].'</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
