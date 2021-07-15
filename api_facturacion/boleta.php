@@ -105,7 +105,7 @@
 	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
 	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
-			'HORA_DOCUMENTO' => $data['hora_comprobante'],
+			'HORA_DOCUMENTO' => (isset($data['hora_comprobante'])) ? $data['hora_comprobante'] : "",
 			'DIAS_VENCIMIENTO' => (isset($data['dias_vencimiento'])) ? $data['dias_vencimiento'] : "30",
 			'FECHA_VTO' => (isset($data['fecha_vto_comprobante'])) ? $data['fecha_vto_comprobante'] : $data['fecha_comprobante'],
 			'INSTRUCCION' => $data['instruccion'],
