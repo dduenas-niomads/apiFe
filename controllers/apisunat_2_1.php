@@ -284,19 +284,17 @@ class Apisunat {
                             }
                             $xmlCPE = $xmlCPE .'
                         </a:ComprobanteDetalle>
-                        <a:ComprobanteGrillaCuenta>
+                        <a:ComprobanteGrillaCuenta>';
+                            for ($i = 0; $i < count($bank); $i++) {
+                                $xmlCPE = $xmlCPE .'
                             <a:ENComprobanteGrillaCuenta>
-                                <a:Descripcion>BCP SOLES</a:Descripcion>
-                                <a:Valor1>SOLES</a:Valor1>
-                                <a:Valor2>194-1333331-0-30</a:Valor2>
-                                <a:Valor3>002-194-006666661030-93</a:Valor3>
-                            </a:ENComprobanteGrillaCuenta>
-                            <a:ENComprobanteGrillaCuenta>
-                                <a:Descripcion>BCP DOLAR</a:Descripcion>
-                                <a:Valor1>DÓLARES AMERICANOS</a:Valor1>
-                                <a:Valor2>194-1444417-1-20</a:Valor2>
-                                <a:Valor3>002-194-001643555555-95</a:Valor3>
-                            </a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>'.$bank[$i]["txtDESCRIPCION_CUENTA"].'</a:Descripcion>
+                                <a:Valor1>'.$bank[$i]["txtDESCRIPCION_MONEDA"].'</a:Valor1>
+                                <a:Valor2>'.$bank[$i]["txtNRO_CUENTA"].'</a:Valor2>
+                                <a:Valor3>'.$bank[$i]["txtCCI"].'</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>';
+                            }
+                            $xmlCPE = $xmlCPE .'
                         </a:ComprobanteGrillaCuenta>
                     <a:ComprobanteMotivosDocumentos>
                        <a:ENComprobanteMotivoDocumento>
@@ -478,19 +476,17 @@ class Apisunat {
                             }
                             $xmlCPE = $xmlCPE .'
                         </a:ComprobanteDetalle>
-                        <a:ComprobanteGrillaCuenta>
+                        <a:ComprobanteGrillaCuenta>';
+                            for ($i = 0; $i < count($bank); $i++) {
+                                $xmlCPE = $xmlCPE .'
                             <a:ENComprobanteGrillaCuenta>
-                                <a:Descripcion>BCP SOLES</a:Descripcion>
-                                <a:Valor1>SOLES</a:Valor1>
-                                <a:Valor2>194-1333331-0-30</a:Valor2>
-                                <a:Valor3>002-194-006666661030-93</a:Valor3>
-                            </a:ENComprobanteGrillaCuenta>
-                            <a:ENComprobanteGrillaCuenta>
-                                <a:Descripcion>BCP DOLAR</a:Descripcion>
-                                <a:Valor1>DÓLARES AMERICANOS</a:Valor1>
-                                <a:Valor2>194-1444417-1-20</a:Valor2>
-                                <a:Valor3>002-194-001643555555-95</a:Valor3>
-                            </a:ENComprobanteGrillaCuenta>
+                                <a:Descripcion>'.$bank[$i]["txtDESCRIPCION_CUENTA"].'</a:Descripcion>
+                                <a:Valor1>'.$bank[$i]["txtDESCRIPCION_MONEDA"].'</a:Valor1>
+                                <a:Valor2>'.$bank[$i]["txtNRO_CUENTA"].'</a:Valor2>
+                                <a:Valor3>'.$bank[$i]["txtCCI"].'</a:Valor3>
+                            </a:ENComprobanteGrillaCuenta>';
+                            }
+                            $xmlCPE = $xmlCPE .'
                         </a:ComprobanteGrillaCuenta>
                     <a:ComprobanteMotivosDocumentos>
                        <a:ENComprobanteMotivoDocumento>
