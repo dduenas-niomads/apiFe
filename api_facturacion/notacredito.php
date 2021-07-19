@@ -145,20 +145,20 @@
 			'EMISOR_PASS_SOL' => $emisor['clavesol'],
 
 			//======== TEXTOS =================================
-	        'TEXTO_ENCABEZADO' => $emisor['texto_encabezado'],
-	        'TEXTO_TARIFA' => $emisor['texto_tarifa'],
-			'TEXTO_DESCRIPCION' => $emisor['texto_descripcion'],
-	        'TEXTO_12' => $emisor['texto_12'],
-	        'TEXTO_13' => $emisor['texto_13'],
-	        'TEXTO_14' => $emisor['texto_14'],
-	        'TEXTO_REFERENCIA' => $emisor['texto_referencia'],
-	        'TEXTO_NRO_ORDEN' => $emisor['texto_nro_orden'],
-	        'TEXTO_DEL' => $emisor['texto_del'],
-	        'TEXTO_AL' => $emisor['texto_al'],
-	        'TEXTO_DIAS' => $emisor['texto_dias'],
-	        'TEXTO_CANTIDAD' => $emisor['texto_cantidad'],
-	        'TEXTO_BULTOS' => $emisor['texto_bultos'],
-	        'TEXTO_VALOR' => $emisor['texto_valor']
+	        'TEXTO_ENCABEZADO' => $data['texto_encabezado'],
+	        'TEXTO_TARIFA' => $data['texto_tarifa'],
+			'TEXTO_DESCRIPCION' => $data['texto_descripcion'],
+	        'TEXTO_12' => $data['texto_12'],
+	        'TEXTO_13' => $data['texto_13'],
+	        'TEXTO_14' => $data['texto_14'],
+	        'TEXTO_REFERENCIA' => $data['texto_referencia'],
+	        'TEXTO_NRO_ORDEN' => $data['texto_nro_orden'],
+	        'TEXTO_DEL' => $data['texto_del'],
+	        'TEXTO_AL' => $data['texto_al'],
+	        'TEXTO_DIAS' => $data['texto_dias'],
+	        'TEXTO_CANTIDAD' => $data['texto_cantidad'],
+	        'TEXTO_BULTOS' => $data['texto_bultos'],
+	        'TEXTO_VALOR' => $data['texto_valor']
 		);
 		
 		return $cabecera;

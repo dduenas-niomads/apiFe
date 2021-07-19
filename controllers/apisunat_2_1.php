@@ -326,9 +326,9 @@ class Apisunat {
                         <a:FormaPago>
                             <a:ENFormaPago>
                                 <a:CodigoFormaPago>001</a:CodigoFormaPago>
-                                <a:DiasVencimiento>30</a:DiasVencimiento>
+                                <a:DiasVencimiento>'.$cabecera["DIAS_VENCIMIENTO"].'</a:DiasVencimiento>
                                 <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
-                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
+                                <a:NotaInstruccion>'.$cabecera["INSTRUCCION"].'</a:NotaInstruccion>
                             </a:ENFormaPago>
                         </a:FormaPago>
                         <a:FormaPagoSunat>';
@@ -371,7 +371,7 @@ class Apisunat {
                                 <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
                             </a:ENReceptor>
                         </a:Receptor>
-                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:Ruc>
                         <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
                         <a:Sucursal>
                             <a:ENSucursal>
@@ -574,7 +574,7 @@ class Apisunat {
                                 <a:Provincia>'.$cabecera["PROVINCIA_CLIENTE"].'</a:Provincia>
                             </a:ENReceptor>
                         </a:Receptor>
-                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_EMPRESA"].'</a:Ruc>
+                        <a:Ruc>'.$cabecera["NRO_DOCUMENTO_CLIENTE"].'</a:Ruc>
                         <a:Serie>'.$cabecera["SERIE_COMPROBANTE"].'</a:Serie>
                         <a:Sucursal>
                             <a:ENSucursal>
