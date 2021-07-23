@@ -98,6 +98,7 @@
 	        'NRO_COMPROBANTE' => $data['numero_comprobante'],
 	        'SERIE_COMPROBANTE' => $data['serie_comprobante'],
 			'FECHA_DOCUMENTO' => $data['fecha_comprobante'],
+			'MULTIGLOSA' => (isset($data['multiglosa'])) ? $data['multiglosa'] : "",
 			'HORA_DOCUMENTO' => (isset($data['hora_comprobante'])) ? $data['hora_comprobante'] : "",
 			'FECHA_VTO' => (isset($data['fecha_vto_comprobante'])) ? $data['fecha_vto_comprobante'] : $data['fecha_comprobante'],
 			'COD_TIPO_DOCUMENTO' => $data['cod_tipo_documento'],
@@ -139,19 +140,9 @@
 
 			//======== TEXTOS =================================
 	        'TEXTO_ENCABEZADO' => $data['texto_encabezado'],
-	        'TEXTO_TARIFA' => $data['texto_tarifa'],
-			'TEXTO_DESCRIPCION' => $data['texto_descripcion'],
-	        'TEXTO_12' => $data['texto_12'],
 	        'TEXTO_13' => $data['texto_13'],
 	        'TEXTO_14' => $data['texto_14'],
-	        'TEXTO_REFERENCIA' => $data['texto_referencia'],
-	        'TEXTO_NRO_ORDEN' => $data['texto_nro_orden'],
-	        'TEXTO_DEL' => $data['texto_del'],
-	        'TEXTO_AL' => $data['texto_al'],
-	        'TEXTO_DIAS' => $data['texto_dias'],
-	        'TEXTO_CANTIDAD' => $data['texto_cantidad'],
-	        'TEXTO_BULTOS' => $data['texto_bultos'],
-	        'TEXTO_VALOR' => $data['texto_valor']
+	        'TEXTO_REFERENCIA' => $data['texto_referencia']
 		);
 		
 		return $cabecera;

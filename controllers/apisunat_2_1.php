@@ -284,38 +284,26 @@ class Apisunat {
                             }
                             $xmlCPE = $xmlCPE .'
                         </a:ComprobanteDetalle>
-                        <a:ComprobanteGrillaCuenta>';
-                            for ($i = 0; $i < count($bank); $i++) {
-                                $xmlCPE = $xmlCPE .'
-                            <a:ENComprobanteGrillaCuenta>
-                                <a:Descripcion>'.$bank[$i]["txtDESCRIPCION_CUENTA"].'</a:Descripcion>
-                                <a:Valor1>'.$bank[$i]["txtDESCRIPCION_MONEDA"].'</a:Valor1>
-                                <a:Valor2>'.$bank[$i]["txtNRO_CUENTA"].'</a:Valor2>
-                                <a:Valor3>'.$bank[$i]["txtCCI"].'</a:Valor3>
-                            </a:ENComprobanteGrillaCuenta>';
-                            }
-                            $xmlCPE = $xmlCPE .'
-                        </a:ComprobanteGrillaCuenta>
-                    <a:ComprobanteMotivosDocumentos>
-                       <a:ENComprobanteMotivoDocumento>
-                          <a:CodigoMotivoEmision>'.$cabecera["COD_TIPO_MOTIVO"].'</a:CodigoMotivoEmision>
-                          <a:NumeroDocRef>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:NumeroDocRef>
-                          <a:SerieDocRef>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:SerieDocRef>
-                         <a:Sustentos>
-                            <a:ENComprobanteMotivoDocumentoSustento>
-                              <a:Sustento>'.$cabecera["DESCRIPCION_MOTIVO"].'</a:Sustento>
-                            </a:ENComprobanteMotivoDocumentoSustento>
-                         </a:Sustentos>
-                      </a:ENComprobanteMotivoDocumento>                                         
-                    </a:ComprobanteMotivosDocumentos>               
-                    <a:ComprobanteNotaCreditoDocRef>
-                       <a:ENComprobanteNotaDocRef>
-                          <a:FechaDocRef>'.$cabecera["FECHA_COMPROBANTE_MODIFICA"].'</a:FechaDocRef>
-                          <a:Numero>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:Numero>
-                          <a:Serie>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:Serie>
-                          <a:TipoComprobante>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</a:TipoComprobante>
-                       </a:ENComprobanteNotaDocRef>
-                    </a:ComprobanteNotaCreditoDocRef>               
+                        <a:ComprobanteMotivosDocumentos>
+                        <a:ENComprobanteMotivoDocumento>
+                            <a:CodigoMotivoEmision>'.$cabecera["COD_TIPO_MOTIVO"].'</a:CodigoMotivoEmision>
+                            <a:NumeroDocRef>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:NumeroDocRef>
+                            <a:SerieDocRef>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:SerieDocRef>
+                            <a:Sustentos>
+                                <a:ENComprobanteMotivoDocumentoSustento>
+                                    <a:Sustento>'.$cabecera["DESCRIPCION_MOTIVO"].'</a:Sustento>
+                                </a:ENComprobanteMotivoDocumentoSustento>
+                            </a:Sustentos>
+                        </a:ENComprobanteMotivoDocumento>                                         
+                        </a:ComprobanteMotivosDocumentos>               
+                        <a:ComprobanteNotaCreditoDocRef>
+                            <a:ENComprobanteNotaDocRef>
+                                <a:FechaDocRef>'.$cabecera["FECHA_COMPROBANTE_MODIFICA"].'</a:FechaDocRef>
+                                <a:Numero>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:Numero>
+                                <a:Serie>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:Serie>
+                                <a:TipoComprobante>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</a:TipoComprobante>
+                            </a:ENComprobanteNotaDocRef>
+                        </a:ComprobanteNotaCreditoDocRef>               
                         <a:ComprobantePropiedadesAdicionales>
                             <a:ENComprobantePropiedadesAdicionales>
                                 <a:Codigo>1000</a:Codigo>
@@ -345,6 +333,7 @@ class Apisunat {
                         $xmlCPE = $xmlCPE . '
                             <a:TipoFormaPago>'.$cabecera["FORMA_PAGO_SUNAT"].'</a:TipoFormaPago>
                         </a:FormaPagoSunat>
+                        <a:Glosa>'.$cabecera["MULTIGLOSA"].'</a:Glosa>
                         <a:HoraEmision>'.$cabecera["HORA_DOCUMENTO"].'</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
                         <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
@@ -383,20 +372,10 @@ class Apisunat {
                         </a:Sucursal>
                         <a:Texto>
                             <a:ENTexto>
-                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>
-                                <a:Texto10>'.$cabecera["TEXTO_TARIFA"].'</a:Texto10>               
-                                <a:Texto11>'.$cabecera["TEXTO_DESCRIPCION"].'</a:Texto11>                     
-                                <a:Texto12>'.$cabecera["TEXTO_12"].'</a:Texto12>                     
+                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>               
                                 <a:Texto13>'.$cabecera["TEXTO_13"].'</a:Texto13>                     
                                 <a:Texto14>'.$cabecera["TEXTO_14"].'</a:Texto14> 
-                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>                     
-                                <a:Texto3>'.$cabecera["TEXTO_NRO_ORDEN"].'</a:Texto3>                     
-                                <a:Texto4>'.$cabecera["TEXTO_DEL"].'</a:Texto4>                     
-                                <a:Texto5>'.$cabecera["TEXTO_AL"].'</a:Texto5>                     
-                                <a:Texto6>'.$cabecera["TEXTO_DIAS"].'</a:Texto6>                     
-                                <a:Texto7>'.$cabecera["TEXTO_CANTIDAD"].'</a:Texto7>                     
-                                <a:Texto8>'.$cabecera["TEXTO_BULTOS"].'</a:Texto8>                     
-                                <a:Texto9>'.$cabecera["TEXTO_VALOR"].'</a:Texto9>                  
+                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>            
                             </a:ENTexto>
                         </a:Texto>
                         <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
@@ -487,38 +466,26 @@ class Apisunat {
                             }
                             $xmlCPE = $xmlCPE .'
                         </a:ComprobanteDetalle>
-                        <a:ComprobanteGrillaCuenta>';
-                            for ($i = 0; $i < count($bank); $i++) {
-                                $xmlCPE = $xmlCPE .'
-                            <a:ENComprobanteGrillaCuenta>
-                                <a:Descripcion>'.$bank[$i]["txtDESCRIPCION_CUENTA"].'</a:Descripcion>
-                                <a:Valor1>'.$bank[$i]["txtDESCRIPCION_MONEDA"].'</a:Valor1>
-                                <a:Valor2>'.$bank[$i]["txtNRO_CUENTA"].'</a:Valor2>
-                                <a:Valor3>'.$bank[$i]["txtCCI"].'</a:Valor3>
-                            </a:ENComprobanteGrillaCuenta>';
-                            }
-                            $xmlCPE = $xmlCPE .'
-                        </a:ComprobanteGrillaCuenta>
-                    <a:ComprobanteMotivosDocumentos>
-                       <a:ENComprobanteMotivoDocumento>
-                          <a:CodigoMotivoEmision>'.$cabecera["COD_TIPO_MOTIVO"].'</a:CodigoMotivoEmision>
-                          <a:NumeroDocRef>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:NumeroDocRef>
-                          <a:SerieDocRef>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:SerieDocRef>
-                         <a:Sustentos>
-                            <a:ENComprobanteMotivoDocumentoSustento>
-                              <a:Sustento>'.$cabecera["DESCRIPCION_MOTIVO"].'</a:Sustento>
-                            </a:ENComprobanteMotivoDocumentoSustento>
-                         </a:Sustentos>
-                      </a:ENComprobanteMotivoDocumento>                                         
-                    </a:ComprobanteMotivosDocumentos>               
-                    <a:ComprobanteNotaCreditoDocRef>
-                       <a:ENComprobanteNotaDocRef>
-                          <a:FechaDocRef>'.$cabecera["FECHA_COMPROBANTE_MODIFICA"].'</a:FechaDocRef>
-                          <a:Numero>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:Numero>
-                          <a:Serie>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:Serie>
-                          <a:TipoComprobante>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</a:TipoComprobante>
-                       </a:ENComprobanteNotaDocRef>
-                    </a:ComprobanteNotaCreditoDocRef>               
+                        <a:ComprobanteMotivosDocumentos>
+                        <a:ENComprobanteMotivoDocumento>
+                            <a:CodigoMotivoEmision>'.$cabecera["COD_TIPO_MOTIVO"].'</a:CodigoMotivoEmision>
+                            <a:NumeroDocRef>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:NumeroDocRef>
+                            <a:SerieDocRef>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:SerieDocRef>
+                            <a:Sustentos>
+                                <a:ENComprobanteMotivoDocumentoSustento>
+                                    <a:Sustento>'.$cabecera["DESCRIPCION_MOTIVO"].'</a:Sustento>
+                                </a:ENComprobanteMotivoDocumentoSustento>
+                            </a:Sustentos>
+                        </a:ENComprobanteMotivoDocumento>                                         
+                        </a:ComprobanteMotivosDocumentos>               
+                        <a:ComprobanteNotaCreditoDocRef>
+                            <a:ENComprobanteNotaDocRef>
+                                <a:FechaDocRef>'.$cabecera["FECHA_COMPROBANTE_MODIFICA"].'</a:FechaDocRef>
+                                <a:Numero>'.$cabecera["NRO_DOCUMENTO_MODIFICA"].'</a:Numero>
+                                <a:Serie>'.$cabecera["SERIE_DOCUMENTO_MODIFICA"].'</a:Serie>
+                                <a:TipoComprobante>'.$cabecera["TIPO_COMPROBANTE_MODIFICA"].'</a:TipoComprobante>
+                            </a:ENComprobanteNotaDocRef>
+                        </a:ComprobanteNotaCreditoDocRef>               
                         <a:ComprobantePropiedadesAdicionales>
                             <a:ENComprobantePropiedadesAdicionales>
                                 <a:Codigo>1000</a:Codigo>
@@ -529,9 +496,9 @@ class Apisunat {
                         <a:FormaPago>
                             <a:ENFormaPago>
                                 <a:CodigoFormaPago>001</a:CodigoFormaPago>
-                                <a:DiasVencimiento>30</a:DiasVencimiento>
+                                <a:DiasVencimiento>'.$cabecera["DIAS_VENCIMIENTO"].'</a:DiasVencimiento>
                                 <a:FechaVencimiento>'.$cabecera["FECHA_VTO"].'</a:FechaVencimiento>
-                                <a:NotaInstruccion>Contado</a:NotaInstruccion>
+                                <a:NotaInstruccion>'.$cabecera["INSTRUCCION"].'</a:NotaInstruccion>
                             </a:ENFormaPago>
                         </a:FormaPago>
                         <a:FormaPagoSunat>';
@@ -548,6 +515,7 @@ class Apisunat {
                         $xmlCPE = $xmlCPE . '
                             <a:TipoFormaPago>'.$cabecera["FORMA_PAGO_SUNAT"].'</a:TipoFormaPago>
                         </a:FormaPagoSunat>
+                        <a:Glosa>'.$cabecera["MULTIGLOSA"].'</a:Glosa>
                         <a:HoraEmision>'.$cabecera["HORA_DOCUMENTO"].'</a:HoraEmision>
                         <a:ImporteTotal>'.$cabecera["TOTAL"].'</a:ImporteTotal>
                         <a:Moneda>'.$cabecera["COD_MONEDA"].'</a:Moneda>
@@ -586,20 +554,10 @@ class Apisunat {
                         </a:Sucursal>
                         <a:Texto>
                             <a:ENTexto>
-                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>
-                                <a:Texto10>'.$cabecera["TEXTO_TARIFA"].'</a:Texto10>               
-                                <a:Texto11>'.$cabecera["TEXTO_DESCRIPCION"].'</a:Texto11>                     
-                                <a:Texto12>'.$cabecera["TEXTO_12"].'</a:Texto12>                     
+                                <a:Texto1>'.$cabecera["TEXTO_ENCABEZADO"].'</a:Texto1>               
                                 <a:Texto13>'.$cabecera["TEXTO_13"].'</a:Texto13>                     
                                 <a:Texto14>'.$cabecera["TEXTO_14"].'</a:Texto14> 
-                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>                     
-                                <a:Texto3>'.$cabecera["TEXTO_NRO_ORDEN"].'</a:Texto3>                     
-                                <a:Texto4>'.$cabecera["TEXTO_DEL"].'</a:Texto4>                     
-                                <a:Texto5>'.$cabecera["TEXTO_AL"].'</a:Texto5>                     
-                                <a:Texto6>'.$cabecera["TEXTO_DIAS"].'</a:Texto6>                     
-                                <a:Texto7>'.$cabecera["TEXTO_CANTIDAD"].'</a:Texto7>                     
-                                <a:Texto8>'.$cabecera["TEXTO_BULTOS"].'</a:Texto8>                     
-                                <a:Texto9>'.$cabecera["TEXTO_VALOR"].'</a:Texto9>                  
+                                <a:Texto2>'.$cabecera["TEXTO_REFERENCIA"].'</a:Texto2>            
                             </a:ENTexto>
                         </a:Texto>
                         <a:TipoComprobante>'.$cabecera["COD_TIPO_DOCUMENTO"].'</a:TipoComprobante>
